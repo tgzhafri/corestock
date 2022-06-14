@@ -78,6 +78,7 @@
     "@popperjs/core": "^2.4.0",
     "axios": "^0.19.0",
     "chart.js": "^2.9.3",
+    "coreui": "^0.4.2-alpha2",
     "cropperjs": "^1.5.7",
     "laravel-mix": "^5.0.4",
     "perfect-scrollbar": "1.5.0"
