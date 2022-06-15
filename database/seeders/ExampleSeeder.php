@@ -15,18 +15,18 @@ class ExampleSeeder extends Seeder
      */
     public function run()
     {
-        $faker = Faker::create();
+        // $faker = Faker::create();
         $statuses = DB::table('status')->get();
         $statusIds = array();
         foreach($statuses as $status){
             array_push($statusIds, $status->id);
         }
-        for($i=0; $i<25; $i++){
-            DB::table('example')->insert([
-                'name'          => $faker->sentence(4,true),
-                'description'   => $faker->paragraph(1,true),
-                'status_id'     => $statusIds[random_int(0,count($statusIds) - 1)],
-            ]);
-        }
+        // for($i=0; $i<25; $i++){
+        //     DB::table('example')->insert([
+        //         'name'          => $faker->sentence(4,true),
+        //         'description'   => $faker->paragraph(1,true),
+        //         'status_id'     => $statusIds[random_int(0,count($statusIds) - 1)],
+        //     ]);
+        // }
     }
 }
