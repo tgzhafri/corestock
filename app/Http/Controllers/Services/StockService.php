@@ -12,7 +12,7 @@ class StockService
 {
     public function __construct()
     {
-        $this->stocks = Stock::get()->orderBy('id', 'asc');
+        $this->stocks = Stock::get()->sortBy('id');
     }
 
     public function updateStatus()
@@ -94,7 +94,7 @@ class StockService
             ]);
         }
 
-        return Stock::get()->orderBy('id', 'asc');
+        return Stock::get()->sortBy('id');
     }
 
     public function fetchImport($request)
@@ -105,7 +105,7 @@ class StockService
             $this->importService($importedData);
             Session::flash('message', 'Upload Successfully.');
             Session::flash('alert-class', 'alert-success');
-            return Stock::get();
+            return Stock::get()->sortBy('id');
         } else {
             Session::flash('message', 'File not uploaded.');
             Session::flash('alert-class', 'alert-danger');

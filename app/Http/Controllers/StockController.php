@@ -13,13 +13,13 @@ class StockController extends Controller
     public function __construct(StockService $service)
     {
         $this->stockService = $service;
-        $this->stocks = Stock::get()->orderBy('id', 'asc');
+        $this->stocks = Stock::get()->sortBy('id');
     }
 
     public function index()
     {
         $this->stockService->updateStatus();
-        $stocks = Stock::get()->orderBy('id', 'asc');
+        $stocks = Stock::get()->sortBy('id');
 
         return view('stock.index', ['stocks' => $stocks]);
     }
