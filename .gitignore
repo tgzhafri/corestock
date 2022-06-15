@@ -1,5 +1,4 @@
 /node_modules
-/database/database.sqlite
 /vendor
 .env
 .env.backup
