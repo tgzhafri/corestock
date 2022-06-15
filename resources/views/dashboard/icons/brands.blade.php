@@ -1,8 +1,7 @@
 @extends('dashboard.base')
 
 @section('css')
-    {{-- <link href="{{ asset('css/brand.min.css') }}" rel="stylesheet"> --}}
-    <link href="css/brand.min.css" rel="stylesheet">
+    <link href="{{ asset('css/brand.min.css') }}" rel="stylesheet">
 @endsection;
 
 

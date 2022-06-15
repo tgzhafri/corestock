@@ -22,7 +22,6 @@ Route::group(['middleware' => ['get.menu']], function () {
     Route::get('/token', function () {
         return csrf_token();
     });
-    // Route::post('/import', 'StockController@import')->name('stock.import');
 
     Route::group(['middleware' => ['role:user']], function () {
         Route::get('/colors', function () {

@@ -1,8 +1,7 @@
 @extends('dashboard.base')
 
 @section('css')
-    {{-- <link href="{{ asset('css/cropper.css') }}" rel="stylesheet"> --}}
-    <link href="css/cropper.css" rel="stylesheet">
+    <link href="{{ asset('css/cropper.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
