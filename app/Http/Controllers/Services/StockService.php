@@ -12,7 +12,7 @@ class StockService
 {
     public function __construct()
     {
-        $this->stocks = Stock::get();
+        $this->stocks = Stock::get()->orderBy('id', 'asc');
     }
 
     public function updateStatus()
@@ -94,7 +94,7 @@ class StockService
             ]);
         }
 
-        return Stock::get();
+        return Stock::get()->orderBy('id', 'asc');
     }
 
     public function fetchImport($request)

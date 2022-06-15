@@ -16,7 +16,7 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        $stocks = Stock::with('supplier')->get();
+        $stocks = Stock::with('supplier')->get()->orderBy('id', 'asc');
         return view('supplier.index', ['stocks' => $stocks]);
     }
 
@@ -70,7 +70,7 @@ class SupplierController extends Controller
      */
     public function edit(Supplier $supplier)
     {
-        $stocks = Stock::with('supplier')->get();
+        $stocks = Stock::with('supplier')->get()->orderBy('id', 'asc');
 
         return view('supplier.edit', ['stocks' => $stocks]);
     }
