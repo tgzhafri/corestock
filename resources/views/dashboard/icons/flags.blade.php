@@ -2,7 +2,8 @@
 
 @section('css')
 
-<link href="{{ asset('css/flag.min.css') }}" rel="stylesheet">
+{{-- <link href="{{ asset('css/flag.min.css') }}" rel="stylesheet"> --}}
+<link href="css/flag.min.css" rel="stylesheet">
 
 @endsection
 

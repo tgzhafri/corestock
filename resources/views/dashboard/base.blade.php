@@ -36,10 +36,13 @@
     <meta name="msapplication-TileImage" content="assets/favicon/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
     <!-- Icons-->
-    <link href="{{ asset('css/free.min.css') }}" rel="stylesheet"> <!-- icons -->
-    <link href="{{ asset('css/flag-icon.min.css') }}" rel="stylesheet"> <!-- icons -->
+    {{-- <link href="{{ asset('css/free.min.css') }}" rel="stylesheet"> <!-- icons --> --}}
+    <link href="css/free.min.css" rel="stylesheet"> <!-- icons -->
+    {{-- <link href="{{ asset('css/flag-icon.min.css') }}" rel="stylesheet"> <!-- icons --> --}}
+    <link href="css/flag-icon.min.css" rel="stylesheet"> <!-- icons -->
     <!-- Main styles for this application-->
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    {{-- <link href="{{ asset('css/style.css') }}" rel="stylesheet"> --}}
+    <link href="css/style.css" rel="stylesheet">
 
     @yield('css')
 
@@ -59,7 +62,8 @@
         gtag('config', 'UA-118965717-5');
     </script>
 
-    <link href="{{ asset('css/coreui-chartjs.css') }}" rel="stylesheet">
+    {{-- <link href="{{ asset('css/coreui-chartjs.css') }}" rel="stylesheet"> --}}
+    <link href="css/coreui-chartjs.css" rel="stylesheet">
 </head>
 
 
