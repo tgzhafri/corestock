@@ -17,7 +17,7 @@
                             <div class="card-header">
                                 <div class="col-lg-12 d-flex justify-content-between">
                                     <div>
-                                        <button type="button" class="btn btn-md btn-dark" data-toggle="modal"
+                                        <button type="button" class="btn btn-md btn-primary" data-toggle="modal"
                                             data-target="#addItemModal">
                                             <strong>Add Item</strong>
                                         </button>
@@ -25,7 +25,7 @@
                                     <div>
                                         <a href="{{ route('stock.index') }}" class="btn btn-md btn-secondary"
                                             type="button">Return</a>
-                                        <button class="btn btn-md btn-primary" type="submit"><strong>Save</strong></button>
+                                        <button class="btn btn-md btn-dark" type="submit">Save</button>
                                     </div>
                                 </div>
                             </div>
@@ -55,8 +55,7 @@
                                                 <td>{{ $stock->name }}</td>
                                                 <td>
                                                     <textarea class="form-control" id="common" type="text" name="common[]" value="{{ $stock->name }}"
-                                                        placeholder="{{ $stock->common_name }}"
-                                                        rows="3">{{ $stock->common_name }}</textarea>
+                                                        placeholder="{{ $stock->common_name }}" rows="3">{{ $stock->common_name }}</textarea>
                                                 </td>
                                                 <td>
                                                     <input class="form-control" id="description" type="text"
@@ -85,22 +84,31 @@
                                                 </td>
                                             </tr>
                                         @endforeach
-
+                                        @if ($stocks->isEmpty())
+                                            <tr>
+                                                <td colspan="10" class="text-center">No data found</td>
+                                            </tr>
+                                        @endif
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="card-footer">
-                                <div class="row col-lg-12 d-flex justify-content-between">
-                                    <div>
-                                        <i class="fa fa-align-justify"></i><strong>Stock List</strong>
-                                    </div>
-                                    <div>
-                                        <a href="{{ route('stock.index') }}" class="btn btn-md btn-secondary"
-                                            type="button">Return</a>
-                                        <button class="btn btn-md btn-primary" type="submit">Save</button>
+                            @if ($stocks->isNotEmpty())
+                                <div class="card-footer">
+                                    <div class="col-lg-12 d-flex justify-content-between">
+                                        <div>
+                                            <button type="button" class="btn btn-md btn-primary" data-toggle="modal"
+                                                data-target="#addItemModal">
+                                                <strong>Add Item</strong>
+                                            </button>
+                                        </div>
+                                        <div>
+                                            <a href="{{ route('stock.index') }}" class="btn btn-md btn-secondary"
+                                                type="button">Return</a>
+                                            <button class="btn btn-md btn-dark" type="submit">Save</button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            @endif
                     </form>
 
                     <!-- Delete Stock Modal -->

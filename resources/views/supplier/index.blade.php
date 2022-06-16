@@ -84,21 +84,28 @@
                                         </td>
                                     </tr>
                                 @endforeach
+                                @if ($stocks->isEmpty())
+                                    <tr>
+                                        <td colspan="10" class="text-center">No data found</td>
+                                    </tr>
+                                @endif
                             </tbody>
                         </table>
                     </div>
-                    <div class="card-footer">
-                        <div class="row col-lg-12 d-flex justify-content-between">
-                            <div>
-                                <h4><strong>List of Stock Supplier</strong></h4>
-                            </div>
-                            <div>
-                                <a href="{{ url('/supplier/edit') }}">
-                                    <button class="btn btn-md btn-primary" type="button">Edit List</button>
-                                </a>
+                    @if ($stocks->isNotEmpty())
+                        <div class="card-footer">
+                            <div class="row col-lg-12 d-flex justify-content-between">
+                                <div>
+                                    <h4><strong>List of Stock Supplier</strong></h4>
+                                </div>
+                                <div>
+                                    <a href="{{ url('/supplier/edit') }}">
+                                        <button class="btn btn-md btn-primary" type="button">Edit List</button>
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @endif
                 </div>
             </div>
             <!-- /.col-->

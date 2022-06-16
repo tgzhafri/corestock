@@ -17,8 +17,8 @@
                                 <!-- Button trigger modal -->
                                 <button type="button" class="btn btn-primary btn-lg col-lg-5" data-toggle="modal"
                                     data-target="#staticBackdrop">
-                                    Upload Excel File </button>
-                                <button class="btn btn-lg btn-secondary col-lg-5" type="reset"> Generate Report</button>
+                                    Upload Excel File</button>
+                                <button class="btn btn-lg btn-secondary col-lg-5" type="reset">Generate Report</button>
                             </div>
                         </div>
                     </div>
@@ -146,21 +146,28 @@
                                         </td>
                                     </tr>
                                 @endforeach
+                                @if ($stocks->isEmpty())
+                                    <tr>
+                                        <td colspan="10" class="text-center">No data found</td>
+                                    </tr>
+                                @endif
                             </tbody>
                         </table>
                     </div>
-                    <div class="card-footer">
-                        <div class="row col-lg-12 d-flex justify-content-between">
-                            <div>
-                                <i class="fa fa-align-justify"></i><strong>Stock List</strong>
-                            </div>
-                            <div>
-                                <a href="{{ url('/stock/edit') }}">
-                                    <button class="btn btn-md btn-primary" type="button">Edit List</button>
-                                </a>
+                    @if ($stocks->isNotEmpty())
+                        <div class="card-footer">
+                            <div class="row col-lg-12 d-flex justify-content-between">
+                                <div>
+                                    <h4 class="fa fa-align-justify"><strong>Stock List</strong></h4>
+                                </div>
+                                <div>
+                                    <a href="{{ url('/stock/edit') }}">
+                                        <button class="btn btn-md btn-primary" type="button">Edit List</button>
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @endif
                 </div>
             </div>
             <!-- /.col-->

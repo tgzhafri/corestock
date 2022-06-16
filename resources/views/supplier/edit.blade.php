@@ -19,7 +19,7 @@
                             <div class="card-header">
                                 <div class="col-lg-12 d-flex justify-content-between">
                                     <div>
-                                        <button type="button" class="btn btn-md btn-dark" data-toggle="modal"
+                                        <button type="button" class="btn btn-md btn-primary" data-toggle="modal"
                                             data-target="#addItemModal">
                                             <strong>Add Supplier</strong>
                                         </button>
@@ -78,23 +78,30 @@
                                                 </td>
                                             </tr>
                                         @endforeach
+                                        @if ($stocks->isEmpty())
+                                            <tr>
+                                                <td colspan="10" class="text-center">No data found</td>
+                                            </tr>
+                                        @endif
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="card-footer">
-                                <div class="col-lg-12 d-flex justify-content-between">
-                                    <div>
-                                        <button type="button" class="btn btn-md btn-dark" data-toggle="modal"
-                                            data-target="#addItemModal">
-                                            <strong>Add Supplier</strong>
-                                        </button>
-                                    </div>
-                                    <div>
-                                        <a href="{{ route('supplier.index') }}" class="btn btn-md btn-secondary"
-                                            type="button">Return</a>
+                            @if ($stocks->isNotEmpty())
+                                <div class="card-footer">
+                                    <div class="col-lg-12 d-flex justify-content-between">
+                                        <div>
+                                            <button type="button" class="btn btn-md btn-primary" data-toggle="modal"
+                                                data-target="#addItemModal">
+                                                <strong>Add Supplier</strong>
+                                            </button>
+                                        </div>
+                                        <div>
+                                            <a href="{{ route('supplier.index') }}" class="btn btn-md btn-secondary"
+                                                type="button">Return</a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            @endif
                         </form>
                         <!-- Delete Supplier Modal -->
                         <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
