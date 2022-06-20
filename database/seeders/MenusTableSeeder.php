@@ -154,6 +154,7 @@ class MenusTableSeeder extends Seeder
         $this->insertLink('user,admin', 'Notes', '/notes', 'cil-notes');
         $this->insertLink('user,admin', 'Stock', '/stock', 'cil-columns');
         $this->insertLink('user,admin', 'Supplier', '/supplier', 'cil-people');
+        $this->insertLink('user,admin', 'Report', '/report', 'cil-description');
         $this->insertLink('guest', 'Login', '/login', 'cil-account-logout');
         $this->insertLink('guest', 'Register', '/register', 'cil-account-logout');
         $this->insertTitle('admin', 'Theme');

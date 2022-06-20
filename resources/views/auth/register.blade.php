@@ -54,7 +54,7 @@
                     <button class="btn btn-block btn-success" type="submit">{{ __('Register') }}</button>
                 </form>
             </div>
-            <div class="card-footer p-4">
+            {{-- <div class="card-footer p-4">
               <div class="row">
                 <div class="col-6">
                   <button class="btn btn-block btn-facebook" type="button">
@@ -67,7 +67,7 @@
                   </button>
                 </div>
               </div>
-            </div>
+            </div> --}}
           </div>
         </div>
       </div>

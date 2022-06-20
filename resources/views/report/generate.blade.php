@@ -1,4 +1,4 @@
-@extends('dashboard.base')
+@extends('dashboard.authBase')
 
 @section('content')
     <div class="container-fluid">

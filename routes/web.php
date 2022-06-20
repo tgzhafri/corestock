@@ -57,6 +57,10 @@ Route::group(['middleware' => ['get.menu']], function () {
             Route::post('/store', 'SupplierController@store')->name('supplier.store');
             Route::post('/destroy', 'SupplierController@destroy')->name('supplier.destroy');
         });
+        Route::prefix('report')->group(function () {
+            Route::get('/', 'ReportController@index')->name('report.index');
+            Route::get('/generate', 'ReportController@generate')->name('report.generate');
+        });
         Route::prefix('base')->group(function () {
             Route::get('/breadcrumb', function () {
                 return view('dashboard.base.breadcrumb');
