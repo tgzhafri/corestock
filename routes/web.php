@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/generate', 'ReportController@generatePDF')->name('report.generate');
 
 Route::group(['middleware' => ['get.menu']], function () {
     Route::get('/', function () {
@@ -59,7 +60,7 @@ Route::group(['middleware' => ['get.menu']], function () {
         });
         Route::prefix('report')->group(function () {
             Route::get('/', 'ReportController@index')->name('report.index');
-            Route::get('/generate', 'ReportController@generate')->name('report.generate');
+            Route::get('/generate', 'ReportController@generatePDF')->name('report.generate');
         });
         Route::prefix('base')->group(function () {
             Route::get('/breadcrumb', function () {

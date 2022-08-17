@@ -494,6 +494,10 @@ html:not([dir=rtl]) .ps__thumb-y {
   }
 }
 
+.tableFixHead          { overflow: auto; height: calc(100vh / 1.35); }
+
+.tableFixHead thead th { position: sticky; top: 0; z-index: 1; }
+
 .tippy-box[data-animation=fade][data-state=hidden] {
   opacity: 0;
 }

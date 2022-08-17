@@ -10,10 +10,15 @@ class Stock extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['code', 'name', 'description', 'balance'];
+    protected $fillable = ['code', 'user_id', 'name', 'description', 'balance'];
 
     public function supplier()
     {
         return $this->hasMany(Supplier::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

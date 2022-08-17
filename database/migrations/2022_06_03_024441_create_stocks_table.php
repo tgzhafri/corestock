@@ -15,13 +15,15 @@ class CreateStocksTable extends Migration
     {
         Schema::create('stocks', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('code');
             $table->string('name');
             $table->string('common_name')->nullable();
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->integer('annual_usage')->nullable();
             $table->integer('balance');
             $table->string('status')->nullable();
+            $table->string('remark')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

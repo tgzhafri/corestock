@@ -12,101 +12,81 @@
                         @endforeach
                     @endif
 
-                    <div class="card">
-                        <form action="{{ route('stock.save') }}" method="POST" enctype="multipart/form-data"
-                            id="formSave">
+                    <div class="card-header bg-transparent border-bottom-0">
+                        <form action="{{ route('stock.save') }}" method="POST" enctype="multipart/form-data" id="formSave">
                             {{ csrf_field() }}
-                            <div class="card-header">
-                                <div class="col-lg-12 d-flex justify-content-between">
-                                    <div>
-                                        <button type="button" class="btn btn-md btn-primary" data-toggle="modal"
-                                            data-target="#addItemModal">
-                                            <strong>Add Supplier</strong>
-                                        </button>
-                                    </div>
-                                    <div>
-                                        <a href="{{ route('supplier.index') }}" class="btn btn-md btn-secondary"
-                                            type="button">Return</a>
-                                    </div>
+                            <div class="row d-flex justify-content-between">
+                                <div>
+                                    <button type="button" class="btn btn-md btn-primary" data-toggle="modal"
+                                        data-target="#addItemModal">
+                                        <strong>Add Supplier</strong>
+                                    </button>
+                                </div>
+                                <div>
+                                    <a href="{{ route('supplier.index') }}" class="btn btn-md btn-secondary"
+                                        type="button">Return</a>
                                 </div>
                             </div>
-                            <div class="card-body overflow-auto">
-                                <table class="table table-responsive-sm table-bordered table-striped table-sm table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th class=''>No.</th>
-                                            <th class='col-1'>Item Code</th>
-                                            <th class='col-3'>Drug / Non-Drug Name</th>
-                                            <th class='col-2'>Common Name</th>
-                                            <th class='col-2'>Packaging Description</th>
-                                            <th class='col-4'>Suppliers</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($stocks as $stock)
-                                            <tr>
-                                                <td>
-                                                    <input id="id" type="number" name="id[]" value="{{ $stock->id }}"
-                                                        placeholder="{{ $stock->id }}" class="form-control-plaintext"
-                                                        readonly>
-                                                </td>
-                                                <td>{{ $stock->code }}</td>
-                                                <td>{{ $stock->name }}</td>
-                                                <td> {{ $stock->common_name }}</td>
-                                                <td>{{ $stock->description }}</td>
-                                                <td>
-                                                    @foreach ($stock->supplier as $supplier)
-                                                        <div>
-                                                            <form action="{{ route('supplier.destroy') }}" method="POST">
-                                                                {{ csrf_field() }}
-                                                                <input type="hidden" name="supplier_id"
-                                                                    value="{{ $supplier->id }}">
-                                                                <input type="hidden" name="stock_id"
-                                                                    value="{{ $stock->id }}">
-                                                                <h6><button type="button"
-                                                                        class="mr-1 btn btn-sm btn-secondary deleteButton"
-                                                                        id="deleteButton" data-toggle="modal"
-                                                                        data-target="#deleteModal"
-                                                                        data-id={{ $supplier->id }}
-                                                                        data-name="{{ $supplier->name }}">
-                                                                        <i class="cil-trash"></i>
-                                                                    </button>
-                                                                    {{ $supplier->name }}</h6>
-                                                            </form>
-                                                        </div>
-                                                    @endforeach
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                        @if ($stocks->isEmpty())
-                                            <tr>
-                                                <td colspan="10" class="text-center">No data found</td>
-                                            </tr>
-                                        @endif
-                                    </tbody>
-                                </table>
-                            </div>
-                            @if ($stocks->isNotEmpty())
-                                <div class="card-footer">
-                                    <div class="col-lg-12 d-flex justify-content-between">
-                                        <div>
-                                            <button type="button" class="btn btn-md btn-primary" data-toggle="modal"
-                                                data-target="#addItemModal">
-                                                <strong>Add Supplier</strong>
-                                            </button>
-                                        </div>
-                                        <div>
-                                            <a href="{{ route('supplier.index') }}" class="btn btn-md btn-secondary"
-                                                type="button">Return</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endif
+                    </div>
+                    <div class="card tableFixHead">
+                        <table class="table table-responsive-sm table-borderless table-striped table-hover mb-0">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th class=''>No.</th>
+                                    <th class='col-1'>Item Code</th>
+                                    <th class='col-3'>Drug / Non-Drug Name</th>
+                                    <th class='col-2'>Common Name</th>
+                                    <th class='col-2'>Packaging Description</th>
+                                    <th class='col-4'>Suppliers</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($stocks as $index => $stock)
+                                    <tr>
+                                        <td>
+                                            <input id="id" type="number" name="id[]" value="{{ $stock->id }}"
+                                                placeholder="{{ $stock->id }}" class="form-control-plaintext" hidden
+                                                readonly>
+                                            {{ $index + 1 }}
+                                        </td>
+                                        <td>{{ $stock->code }}</td>
+                                        <td>{{ $stock->name }}</td>
+                                        <td> {{ $stock->common_name }}</td>
+                                        <td>{{ $stock->description }}</td>
+                                        <td>
+                                            @foreach ($stock->supplier as $supplier)
+                                                <div>
+                                                    <form action="{{ route('supplier.destroy') }}" method="POST">
+                                                        {{ csrf_field() }}
+                                                        <input type="hidden" name="supplier_id"
+                                                            value="{{ $supplier->id }}">
+                                                        <input type="hidden" name="stock_id" value="{{ $stock->id }}">
+                                                        <h6><button type="button"
+                                                                class="mr-1 btn btn-sm btn-secondary deleteButton"
+                                                                id="deleteButton" data-toggle="modal"
+                                                                data-target="#deleteModal" data-id={{ $supplier->id }}
+                                                                data-name="{{ $supplier->name }}">
+                                                                <i class="cil-trash"></i>
+                                                            </button>
+                                                            {{ $supplier->name }}</h6>
+                                                    </form>
+                                                </div>
+                                            @endforeach
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                @if ($stocks->isEmpty())
+                                    <tr>
+                                        <td colspan="10" class="text-center">No data found</td>
+                                    </tr>
+                                @endif
+                            </tbody>
+                        </table>
                         </form>
                         <!-- Delete Supplier Modal -->
                         <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
                             aria-hidden="true">
-                            <div class="modal-dialog">
+                            <div class="modal-dialog modal-danger">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="deleteModalLabel">
@@ -137,12 +117,11 @@
                             {{ csrf_field() }}
                             <div class="modal fade" id="addItemModal" tabindex="-1" role="dialog"
                                 aria-labelledby="addItemModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
+                                <div class="modal-dialog modal-primary" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="addItemModalLabel">Add New Supplier </h5>
-                                            <button type="button" class="close" data-dismiss="modal"
-                                                aria-label="Close">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
@@ -170,7 +149,8 @@
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
                                                 data-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-primary" data-dismiss="static">Add</button>
+                                            <button type="submit" class="btn btn-primary"
+                                                data-dismiss="static">Add</button>
                                         </div>
                                     </div>
                                 </div>

@@ -13,108 +13,94 @@
                     @endif
                     <form action="{{ route('stock.save') }}" method="POST" enctype="multipart/form-data" id="formSave">
                         {{ csrf_field() }}
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="col-lg-12 d-flex justify-content-between">
-                                    <div>
-                                        <button type="button" class="btn btn-md btn-primary" data-toggle="modal"
-                                            data-target="#addItemModal">
-                                            <strong>Add Item</strong>
-                                        </button>
-                                    </div>
-                                    <div>
-                                        <a href="{{ route('stock.index') }}" class="btn btn-md btn-secondary"
-                                            type="button">Return</a>
-                                        <button class="btn btn-md btn-dark" type="submit">Save</button>
-                                    </div>
+                        <div class="card-header bg-transparent border-bottom-0">
+                            <div class="row d-flex justify-content-between">
+                                <div>
+                                    <button type="button" class="btn btn-md btn-primary" data-toggle="modal"
+                                        data-target="#addItemModal">
+                                        <strong>Add Item</strong>
+                                    </button>
+                                </div>
+                                <div>
+                                    <a href="{{ route('stock.index') }}" class="btn btn-md btn-secondary"
+                                        type="button">Return</a>
+                                    <button class="btn btn-md btn-dark" type="submit">Save</button>
                                 </div>
                             </div>
-                            <div class="card-body overflow-auto">
-                                <table class="table table-responsive-sm table-bordered table-striped table-sm table-hover">
-                                    <thead>
+                        </div>
+                        <div class="card tableFixHead">
+                            <table class="table table-responsive-sm table-striped table-borderless table-hover mb-0">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th class=''>No.</th>
+                                        <th class='col-1'>Item Code</th>
+                                        <th class='col-1'>Drug / Non-Drug Name</th>
+                                        <th class='col-1.5'>Common Name</th>
+                                        <th class='col-1.5'>Packaging Description</th>
+                                        <th class=''>Total Stock In (SKU)</th>
+                                        <th class=''>Usage per Year</th>
+                                        <th class='col-1.5'>Remark</th>
+                                        <th class='text-center'>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($stocks as $index => $stock)
                                         <tr>
-                                            <th class='col-1'>No.</th>
-                                            <th class='col-1'>Item Code</th>
-                                            <th class='col-2'>Drug / Non-Drug Name</th>
-                                            <th class='col-2'>Common Name</th>
-                                            <th class='col-2'>Packaging Description</th>
-                                            <th class='col-1.5'>Total Stock In (SKU)</th>
-                                            <th class='col-1.5'>Usage per Year</th>
-                                            <th class='col-1'>Action</th>
+                                            <td>
+                                                <input id="id" type="number" name="id[]"
+                                                    value="{{ $stock->id }}" placeholder="{{ $stock->id }}"
+                                                    class="form-control-plaintext" hidden readonly>
+                                                {{ $index + 1 }}
+                                            </td>
+                                            <td>{{ $stock->code }}</td>
+                                            <td>{{ $stock->name }}</td>
+                                            <td>
+                                                <textarea class="form-control" id="common" type="text" name="common[]" value="{{ $stock->name }}"
+                                                    placeholder="{{ $stock->common_name }}" rows="">{{ $stock->common_name }}</textarea>
+                                            </td>
+                                            <td>
+                                                <textarea class="form-control" id="description" type="text" rows="" name="description[]"
+                                                    value="{{ $stock->description }}" placeholder="{{ $stock->description }}"></textarea>
+                                            </td>
+                                            <td>
+                                                <input class="form-control" id="balance" type="number" name="balance[]"
+                                                    value="{{ $stock->balance }}" placeholder="{{ $stock->balance }}">
+                                            </td>
+                                            <td>
+                                                <input class="form-control" id="annual_usage" type="number"
+                                                    name="annual_usage[]" value="{{ $stock->annual_usage }}"
+                                                    placeholder="{{ $stock->annual_usage }}">
+                                            </td>
+                                            <td>
+                                                <textarea class="form-control" id="remark" type="text" name="remark[]" value="{{ $stock->remark }}"
+                                                    placeholder="{{ $stock->remark }}"></textarea>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex justify-content-center align-middle">
+                                                    <!-- Button trigger modal -->
+                                                    <button type="button" class="btn btn-secondary btn-md deleteButton"
+                                                        data-toggle="modal" data-target="#deleteModal"
+                                                        data-id={{ $stock->id }} data-code={{ $stock->code }}
+                                                        data-name="{{ $stock->name }}">
+                                                        <i class="cil-trash"></i> </button>
+                                                </div>
+                                            </td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($stocks as $stock)
-                                            <tr>
-                                                <td>
-                                                    <input id="id" type="number" name="id[]" value="{{ $stock->id }}"
-                                                        placeholder="{{ $stock->id }}" class="form-control-plaintext"
-                                                        readonly>
-                                                </td>
-                                                <td>{{ $stock->code }}</td>
-                                                <td>{{ $stock->name }}</td>
-                                                <td>
-                                                    <textarea class="form-control" id="common" type="text" name="common[]" value="{{ $stock->name }}"
-                                                        placeholder="{{ $stock->common_name }}" rows="3">{{ $stock->common_name }}</textarea>
-                                                </td>
-                                                <td>
-                                                    <input class="form-control" id="description" type="text"
-                                                        name="description[]" value="{{ $stock->description }}"
-                                                        placeholder="{{ $stock->description }}">
-                                                </td>
-                                                <td>
-                                                    <input class="form-control" id="balance" type="number"
-                                                        name="balance[]" value="{{ $stock->balance }}"
-                                                        placeholder="{{ $stock->balance }}">
-                                                </td>
-                                                <td>
-                                                    <input class="form-control" id="annual_usage" type="number"
-                                                        name="annual_usage[]" value="{{ $stock->annual_usage }}"
-                                                        placeholder="{{ $stock->annual_usage }}">
-                                                </td>
-                                                <td>
-                                                    <div class="d-flex justify-content-center align-middle">
-                                                        <!-- Button trigger modal -->
-                                                        <button type="button" class="btn btn-secondary btn-md deleteButton"
-                                                            data-toggle="modal" data-target="#deleteModal"
-                                                            data-id={{ $stock->id }} data-code={{ $stock->code }}
-                                                            data-name="{{ $stock->name }}">
-                                                            <i class="cil-trash"></i> </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                        @if ($stocks->isEmpty())
-                                            <tr>
-                                                <td colspan="10" class="text-center">No data found</td>
-                                            </tr>
-                                        @endif
-                                    </tbody>
-                                </table>
-                            </div>
-                            @if ($stocks->isNotEmpty())
-                                <div class="card-footer">
-                                    <div class="col-lg-12 d-flex justify-content-between">
-                                        <div>
-                                            <button type="button" class="btn btn-md btn-primary" data-toggle="modal"
-                                                data-target="#addItemModal">
-                                                <strong>Add Item</strong>
-                                            </button>
-                                        </div>
-                                        <div>
-                                            <a href="{{ route('stock.index') }}" class="btn btn-md btn-secondary"
-                                                type="button">Return</a>
-                                            <button class="btn btn-md btn-dark" type="submit">Save</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endif
+                                    @endforeach
+                                    @if ($stocks->isEmpty())
+                                        <tr>
+                                            <td colspan="10" class="text-center">No data found</td>
+                                        </tr>
+                                    @endif
+                                </tbody>
+                            </table>
+                        </div>
                     </form>
 
                     <!-- Delete Stock Modal -->
                     <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
                         aria-hidden="true">
-                        <div class="modal-dialog">
+                        <div class="modal-dialog modal-danger">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="deleteModalLabel">
@@ -145,12 +131,11 @@
                         {{ csrf_field() }}
                         <div class="modal fade" id="addItemModal" tabindex="-1" role="dialog"
                             aria-labelledby="addItemModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
+                            <div class="modal-dialog modal-primary" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="addItemModalLabel">Add New Item</h5>
-                                        <button type="button" class="close" data-dismiss="modal"
-                                            aria-label="Close">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
@@ -159,8 +144,8 @@
                                             <div class="form-row">
                                                 <div class="col">
                                                     <label for="code">Item Code</label>
-                                                    <input type="text" class="form-control" id="code" name="code"
-                                                        placeholder="Enter item code" required>
+                                                    <input type="text" class="form-control" id="code"
+                                                        name="code" placeholder="Enter item code" required>
                                                     @if ($errors->has('code'))
                                                         <div class="alert alert-danger">{{ $errors->first('code') }}
                                                         </div>
@@ -169,7 +154,7 @@
                                                 <div class="col">
                                                     <label for="description">Packaging Description</label>
                                                     <input type="text" class="form-control" id="description"
-                                                        name="description" placeholder="Enter description">
+                                                        name="description" placeholder="Enter description" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -183,14 +168,14 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="common_name">Common Name</label>
-                                            <input type="text" class="form-control" id="common_name" name="common_name"
-                                                placeholder="Enter common name">
+                                            <input type="text" class="form-control" id="common_name"
+                                                name="common_name" placeholder="Enter common name" required>
                                         </div>
                                         <div class="form-row">
                                             <div class="col">
                                                 <label for="usage">Annual Usage</label>
                                                 <input type="number" class="form-control" id="usage" name="usage"
-                                                    placeholder="Enter number">
+                                                    placeholder="Enter number" required>
                                             </div>
                                             <div class="col">
                                                 <label for="balance">Stock Balance</label>
@@ -204,7 +189,8 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Close</button>
                                         <button type="submit" class="btn btn-primary" data-dismiss="static">Save
                                             changes</button>
                                     </div>

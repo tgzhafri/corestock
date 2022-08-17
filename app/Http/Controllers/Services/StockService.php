@@ -13,6 +13,7 @@ class StockService
     public function __construct()
     {
         $this->stocks = Stock::get()->sortBy('id');
+        $this->user = auth()->user();
     }
 
     public function updateStatus()
@@ -40,6 +41,7 @@ class StockService
     public function fetchCreate($request)
     {
         $stock = new Stock();
+        $stock->user_id = auth()->user()->id;
         $stock->code = $request->code;
         $stock->name = $request->name;
         $stock->common_name = $request->common_name;
@@ -84,6 +86,7 @@ class StockService
         $balance = $request->balance;
         $annualUsage = $request->annual_usage;
         $common = $request->common;
+        $remark = $request->remark;
 
         foreach ($ids as $index => $id) {
             $stock = $this->stocks->find($id);
@@ -91,6 +94,7 @@ class StockService
                 'balance' => $balance[$index],
                 'annual_usage' => $annualUsage[$index],
                 'common_name' => $common[$index],
+                'remark' => $remark[$index],
             ]);
         }
 
@@ -115,11 +119,13 @@ class StockService
 
     public function importService($data)
     {
+        $user_id = auth()->user()->id;
         foreach ($data as $rows) {
             foreach ($rows as $row) {
                 if ($row['item_code']) {
                     Stock::updateOrCreate(
                         [
+                            'user_id' => $user_id,
                             'code' => $row['item_code'] ? $row['item_code'] : 'null',
                         ],
                         [

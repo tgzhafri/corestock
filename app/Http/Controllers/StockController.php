@@ -13,13 +13,12 @@ class StockController extends Controller
     public function __construct(StockService $service)
     {
         $this->stockService = $service;
-        $this->stocks = Stock::get()->sortBy('id');
     }
 
     public function index()
     {
+        $stocks = auth()->user()->stock()->get()->sortBy('id');
         $this->stockService->updateStatus();
-        $stocks = Stock::get()->sortBy('id');
 
         return view('stock.index', ['stocks' => $stocks]);
     }
@@ -41,13 +40,14 @@ class StockController extends Controller
 
     public function edit()
     {
-        return view('stock.edit', ['stocks' => $this->stocks]);
+        $stocks = auth()->user()->stock()->get()->sortBy('id');
+
+        return view('stock.edit', ['stocks' => $stocks]);
     }
 
     public function show(Request $request)
     {
         $result = $this->stockService->showFilter($request);
-
         return view('stock.index', ['stocks' => $result]);
     }
 
