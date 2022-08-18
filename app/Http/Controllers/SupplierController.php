@@ -41,6 +41,10 @@ class SupplierController extends Controller
         $suppliers = $request->supplier;
         $stockId = $request->stock_id;
 
+        if (!$stockId) {
+            return Redirect::back()->withErrors('No item selected');
+        }
+
         foreach ($suppliers as $supplier) {
             Supplier::create([
                 'name' => $supplier,

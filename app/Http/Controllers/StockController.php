@@ -35,12 +35,14 @@ class StockController extends Controller
         }
 
         $this->stockService->fetchCreate($request);
+        $this->stockService->updateStatus();
         return Redirect::back();
     }
 
     public function edit()
     {
         $stocks = auth()->user()->stock()->get()->sortBy('id');
+        $this->stockService->updateStatus();
 
         return view('stock.edit', ['stocks' => $stocks]);
     }
@@ -62,6 +64,7 @@ class StockController extends Controller
     public function save(Request $request)
     {
         $result = $this->stockService->fetchSave($request);
+        $this->stockService->updateStatus();
 
         return Redirect::route('stock.index', ['stocks' => $result]);
     }
@@ -77,6 +80,7 @@ class StockController extends Controller
         }
 
         $result = $this->stockService->fetchImport($request);
+        $this->stockService->updateStatus();
 
         if ($result) {
             return Redirect::route('stock.index', ['stocks' => $result]);

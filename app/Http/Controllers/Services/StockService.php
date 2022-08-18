@@ -12,12 +12,13 @@ class StockService
 {
     public function __construct()
     {
-        $this->stocks = Stock::get()->sortBy('id');
         $this->user = auth()->user();
     }
 
     public function updateStatus()
     {
+        $this->stocks = auth()->user()->stock()->get()->sortBy('id');
+
         $this->stocks->map(function ($stock) {
             $usagePerMonth = $stock->annual_usage / 12;
             $twoMonthUsage = $usagePerMonth * 2;
@@ -53,6 +54,8 @@ class StockService
 
     public function showFilter($request)
     {
+        $this->stocks = auth()->user()->stock()->get()->sortBy('id');
+
         $usagePeriod = $request->usage;
         $status = $request->status;
         $status == 'all' ? $stocks = $this->stocks : $stocks = $this->stocks->where('status', $status);
@@ -82,6 +85,7 @@ class StockService
 
     public function fetchSave($request)
     {
+        $stocks = auth()->user()->stock()->get()->sortBy('id');
         $ids = $request->id;
         $balance = $request->balance;
         $annualUsage = $request->annual_usage;
@@ -89,7 +93,7 @@ class StockService
         $remark = $request->remark;
 
         foreach ($ids as $index => $id) {
-            $stock = $this->stocks->find($id);
+            $stock = $stocks->find($id);
             $stock->whereId($id)->update([
                 'balance' => $balance[$index],
                 'annual_usage' => $annualUsage[$index],
@@ -98,7 +102,7 @@ class StockService
             ]);
         }
 
-        return Stock::get()->sortBy('id');
+        return auth()->user()->stock()->get()->sortBy('id');
     }
 
     public function fetchImport($request)

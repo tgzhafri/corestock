@@ -3,7 +3,7 @@
     <div class="card tableFixHead border-0">
         <table class="table table-responsive-sm mb-0 table-bordered">
             <tr>
-                <td colspan="8">SQ Report</td>
+                <td colspan="8"><strong>SQ Report</strong></td>
             </tr>
             <tr>
                 <td colspan="2">

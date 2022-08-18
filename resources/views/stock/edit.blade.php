@@ -22,7 +22,7 @@
                                     </button>
                                 </div>
                                 <div>
-                                    <a href="{{ route('stock.index') }}" class="btn btn-md btn-secondary"
+                                    <a href="{{ url()->previous() }}" class="btn btn-md btn-secondary"
                                         type="button">Return</a>
                                     <button class="btn btn-md btn-dark" type="submit">Save</button>
                                 </div>
@@ -73,7 +73,7 @@
                                             </td>
                                             <td>
                                                 <textarea class="form-control" id="remark" type="text" name="remark[]" value="{{ $stock->remark }}"
-                                                    placeholder="{{ $stock->remark }}"></textarea>
+                                                    placeholder="{{ $stock->remark }}">{{ $stock->remark }}</textarea>
                                             </td>
                                             <td>
                                                 <div class="d-flex justify-content-center align-middle">

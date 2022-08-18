@@ -17,10 +17,10 @@
             <div class="row">
                 <!-- /.col-->
                 <div class="col">
-                    <div class="card tableFixHead border-0">
+                    <div class="card tableFixHead border-0 small">
                         <table class="table table-responsive-sm mb-0 table-bordered">
                             <tr>
-                                <td colspan="8">SQ Report</td>
+                                <td colspan="8"><strong>SQ Report</strong></td>
                             </tr>
                             <tr>
                                 <td colspan="2">
@@ -52,8 +52,7 @@
                             </tr>
                         </table>
 
-                        <table
-                            class="table table-responsive-sm table-striped table-bordered table-sm table-hover mb-0">
+                        <table class="table table-responsive-sm table-striped table-bordered table-sm table-hover mb-0">
                             <thead class="thead-dark">
                                 <tr>
                                     <th>No.</th>
@@ -65,7 +64,7 @@
                                     <th style="width: 20%">Remark</th>
                                 </tr>
                             </thead>
-                            <tbody class="small">
+                            <tbody class="">
                                 @if ($stocks->isEmpty())
                                     <tr>
                                         <td colspan="10" class="text-center">No data found</td>

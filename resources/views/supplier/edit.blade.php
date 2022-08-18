@@ -23,7 +23,7 @@
                                     </button>
                                 </div>
                                 <div>
-                                    <a href="{{ route('supplier.index') }}" class="btn btn-md btn-secondary"
+                                    <a href="{{ url()->previous() }}" class="btn btn-md btn-secondary"
                                         type="button">Return</a>
                                 </div>
                             </div>
@@ -129,7 +129,7 @@
                                             <div class="form-group">
                                                 <label for="code">Item</label>
                                                 <select class="form-control" id="stock-list" name="stock_id">
-                                                    <option selected>Select item here</option>
+                                                    <option selected value="">Select item here</option>
                                                     @foreach ($stocks as $stock)
                                                         <option id="itemList" value="{{ $stock->id }}">
                                                             {{ $stock->code }} - {{ $stock->name }}

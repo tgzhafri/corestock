@@ -78,9 +78,9 @@
                                     <th class="col-2">Common Name</th>
                                     <th class="col-2">Packaging Description</th>
                                     <th class="col-1">Total Stock In (SKU)</th>
-                                    <th class="col-1">Usage per
-                                        <select class="form-select" name="usage" aria-label="Default select example"
-                                            onchange="this.form.submit()">
+                                    <th class="col-1">Usage Per
+                                        <select class="form-select btn btn-secondary dropdown-toggle" name="usage"
+                                            aria-label="Default select example" onchange="this.form.submit()">
                                             <option value="year" @if (isset($_GET['usage']) && $_GET['usage'] == 'year') selected @endif>
                                                 Year</option>
                                             <option value="quarter" @if (isset($_GET['usage']) && $_GET['usage'] == 'quarter') selected @endif>
@@ -91,16 +91,17 @@
                                                 Week</option>
                                         </select>
                                     </th>
-                                    <th class="col-1">Quantity Required per
+                                    <th class="col-1">Quantity Required
+                                        {{-- per
                                         @if (isset($_GET['usage']))
                                             {{ $_GET['usage'] }}
                                         @else
                                             year
-                                        @endif
+                                        @endif --}}
                                     </th>
-                                    <th class="col-1">Stock Status
-                                        <select class="form-select" name="status" aria-label="Default select example"
-                                            onchange="this.form.submit()">
+                                    <th class="col-1">Status
+                                        <select class="form-select btn btn-secondary dropdown-toggle" name="status"
+                                            aria-label="Default select example" onchange="this.form.submit()">
                                             <option value="all" @if (isset($_GET['status']) && $_GET['status'] == 'all') selected @endif>
                                                 All</option>
                                             <option value="low" @if (isset($_GET['status']) && $_GET['status'] == 'low') selected @endif>
@@ -127,7 +128,7 @@
                                     <td>{{ $stock['annual_usage'] }}</td>
                                     {{-- quantity required --}}
                                     <td>{{ $stock['balance'] - $stock['annual_usage'] }}</td>
-                                    <td>
+                                    <td class="text-center">
                                         @if ($stock['status'] == 'high')
                                             <span class="badge badge-success">High</span>
                                         @elseif ($stock['status'] == 'medium')
