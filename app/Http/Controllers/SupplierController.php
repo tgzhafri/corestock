@@ -16,7 +16,7 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        $stocks = auth()->user()->stock()->get()->sortBy('id');
+        $stocks = auth()->user()->stock()->get()->sortBy('name');
         return view('supplier.index', ['stocks' => $stocks]);
     }
 
@@ -74,7 +74,7 @@ class SupplierController extends Controller
      */
     public function edit(Supplier $supplier)
     {
-        $stocks = auth()->user()->stock()->get()->sortBy('id');
+        $stocks = auth()->user()->stock()->get()->sortBy('name');
 
         return view('supplier.edit', ['stocks' => $stocks]);
     }

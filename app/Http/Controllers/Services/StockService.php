@@ -17,7 +17,7 @@ class StockService
 
     public function updateStatus()
     {
-        $this->stocks = auth()->user()->stock()->get()->sortBy('id');
+        $this->stocks = auth()->user()->stock()->get()->sortBy('name');
 
         $this->stocks->map(function ($stock) {
             $usagePerMonth = $stock->annual_usage / 12;
@@ -54,7 +54,7 @@ class StockService
 
     public function showFilter($request)
     {
-        $this->stocks = auth()->user()->stock()->get()->sortBy('id');
+        $this->stocks = auth()->user()->stock()->get()->sortBy('name');
 
         $usagePeriod = $request->usage;
         $status = $request->status;
@@ -85,7 +85,7 @@ class StockService
 
     public function fetchSave($request)
     {
-        $stocks = auth()->user()->stock()->get()->sortBy('id');
+        $stocks = auth()->user()->stock()->get()->sortBy('name');
         $ids = $request->id;
         $balance = $request->balance;
         $annualUsage = $request->annual_usage;
@@ -102,7 +102,7 @@ class StockService
             ]);
         }
 
-        return auth()->user()->stock()->get()->sortBy('id');
+        return auth()->user()->stock()->get()->sortBy('name');
     }
 
     public function fetchImport($request)
@@ -113,7 +113,7 @@ class StockService
             $this->importService($importedData);
             Session::flash('message', 'Upload Successfully.');
             Session::flash('alert-class', 'alert-success');
-            return Stock::get()->sortBy('id');
+            return auth()->user()->stock()->get()->sortBy('name');
         } else {
             Session::flash('message', 'File not uploaded.');
             Session::flash('alert-class', 'alert-danger');

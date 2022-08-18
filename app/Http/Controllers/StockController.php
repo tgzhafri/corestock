@@ -17,7 +17,7 @@ class StockController extends Controller
 
     public function index()
     {
-        $stocks = auth()->user()->stock()->get()->sortBy('id');
+        $stocks = auth()->user()->stock()->get()->sortBy('name');
         $this->stockService->updateStatus();
 
         return view('stock.index', ['stocks' => $stocks]);
@@ -41,7 +41,7 @@ class StockController extends Controller
 
     public function edit()
     {
-        $stocks = auth()->user()->stock()->get()->sortBy('id');
+        $stocks = auth()->user()->stock()->get()->sortBy('name');
         $this->stockService->updateStatus();
 
         return view('stock.edit', ['stocks' => $stocks]);

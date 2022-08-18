@@ -9,25 +9,28 @@ class ReportController extends Controller
 {
     public function index()
     {
-        $stocks = auth()->user()->stock()->get()->sortBy('id');
+        $stocks = auth()->user()->stock()->get()->sortBy('name');
 
         return view('report.index', ['stocks' => $stocks]);
     }
 
     public function generatePDF()
     {
-        // retreive all records from db
-        // $stocks = Stock::with('supplier')->get()->toArray();
-        $stocks = auth()->user()->stock()->get()->sortBy('id');
+        $stocks = auth()->user()->stock()->get()->sortBy('name');
 
         $content = view('report.generate', ['stocks' => $stocks])->render();
 
-        return Browsershot::html($content)
+        $filePath = 'pdf/report.pdf';
+
+        Browsershot::html($content)
             ->noSandbox()
+            ->waitUntilNetworkIdle()
             ->showBackground()
             ->margins(18, 18, 24, 18)
             ->format('A4')
             ->showBackground()
-            ->save(storage_path('pdf/report.pdf'));
+            ->save(storage_path($filePath));
+
+        return response()->download(storage_path($filePath))->deleteFileAfterSend(true);
     }
 }
