@@ -39,9 +39,9 @@
             </tr>
         </table>
 
-        <table class="table table-responsive-sm table-striped table-bordered table-outline table-hover mb-0">
+        <table id="listTable" class="table table-responsive-sm table-striped table-bordered table-outline table-hover mb-0">
             <thead class="thead-dark">
-                <tr>
+                <tr id="tableHeader">
                     <th>No.</th>
                     <th class="col-1">Item Code</th>
                     <th class="col-3">Name</th>
@@ -63,11 +63,6 @@
                         <td>{{ $stock['code'] }}</td>
                         <td>{{ $stock['name'] }}</td>
                         <td>{{ $stock['common_name'] }}</td>
-                        {{-- <td>
-                            <div class="clearfix">
-                                <div class="float-left"><strong>50%</strong></div>
-                            </div>
-                        </td> --}}
                         <td>{{ $stock['balance'] - $stock['annual_usage'] }}</td>
                         <td>
                             @foreach ($stock['supplier'] as $supplier)
@@ -82,4 +77,8 @@
             </tbody>
         </table>
     </div>
+@endsection
+
+@section('javascript')
+    @include('stock.searchTable')
 @endsection

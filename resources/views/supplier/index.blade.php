@@ -11,6 +11,13 @@
                             <h4><strong>Stock Supplier List</strong></h4>
                         </div>
                         <div>
+                            <div class="input-group">
+                                <input id="searchInput" onkeyup="searchTable()" type="search" class="form-control rounded"
+                                    placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                                <button type="button" class="btn btn-secondary">Go!</button>
+                            </div>
+                        </div>
+                        <div>
                             <a href="{{ url('/supplier/edit') }}">
                                 <button class="btn btn-md btn-primary" type="button">Edit List</button>
                             </a>
@@ -18,10 +25,10 @@
                     </div>
                 </div>
                 <div class="card tableFixHead">
-                    <table class="table table-responsive-sm table-borderless table-striped mb-0">
+                    <table id="listTable" class="table table-responsive-sm table-borderless table-striped mb-0">
                         <thead class="thead-dark">
                             <form action="{{ route('stock.show') }}" method="GET">
-                                <tr>
+                                <tr id="tableHeader">
                                     <th class="">No.</th>
                                     <th class="col-2">Item Code</th>
                                     <th class="col-3">Drug / Non-Drug Name</th>
@@ -65,4 +72,5 @@
 @endsection
 
 @section('javascript')
+    @include('stock.searchTable')
 @endsection

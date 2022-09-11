@@ -13,7 +13,15 @@
                             <div>
                                 <h4 class="fa fa-align-justify"><strong>Report Preview</strong></h4>
                             </div>
-                            <div class="alert alert-success mb-0 animated-alert fadeOut" tabindex="1">Quantity per
+                            <div>
+                                <div class="input-group">
+                                    <input id="searchInput" onkeyup="searchTable()" type="search"
+                                        class="form-control rounded" placeholder="Search" aria-label="Search"
+                                        aria-describedby="search-addon" />
+                                    <button type="button" class="btn btn-secondary">Go!</button>
+                                </div>
+                            </div>
+                            <div class="alert alert-primary mb-0 animated-alert fadeOut" tabindex="1">Quantity per
                                 <span class='text-uppercase'> {{ request('usage') ?? 'year' }}</span> selected
                             </div>
                             <div class="d-flex justify-content-around">
@@ -49,3 +57,5 @@
             </div>
         </div>
     @endsection
+
+

@@ -23,15 +23,24 @@
                                     </button>
                                 </div>
                                 <div>
+                                    <div class="input-group">
+                                        <input id="searchInput" onkeyup="searchTable()" type="search"
+                                            class="form-control rounded" placeholder="Search" aria-label="Search"
+                                            aria-describedby="search-addon" />
+                                        <button type="button" class="btn btn-secondary">Go!</button>
+                                    </div>
+                                </div>
+                                <div>
                                     <a href="{{ url()->previous() }}" class="btn btn-md btn-secondary"
                                         type="button">Return</a>
                                 </div>
                             </div>
                     </div>
                     <div class="card tableFixHead">
-                        <table class="table table-responsive-sm table-borderless table-striped table-hover mb-0">
+                        <table id="listTable"
+                            class="table table-responsive-sm table-borderless table-striped table-hover mb-0">
                             <thead class="thead-dark">
-                                <tr>
+                                <tr id="tableHeader">
                                     <th class=''>No.</th>
                                     <th class='col-1'>Item Code</th>
                                     <th class='col-3'>Drug / Non-Drug Name</th>
@@ -121,7 +130,8 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="addItemModalLabel">Add New Supplier </h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
@@ -167,6 +177,7 @@
     @endsection
 
     @section('javascript')
+        @include('stock.searchTable')
         <script>
             // {start} for adding and removing supplier field
             function createFieldComponent() {

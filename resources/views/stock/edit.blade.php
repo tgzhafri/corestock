@@ -22,6 +22,14 @@
                                     </button>
                                 </div>
                                 <div>
+                                    <div class="input-group">
+                                        <input id="searchInput" onkeyup="searchTable()" type="search"
+                                            class="form-control rounded" placeholder="Search" aria-label="Search"
+                                            aria-describedby="search-addon" />
+                                        <button type="button" class="btn btn-secondary">Go!</button>
+                                    </div>
+                                </div>
+                                <div>
                                     <a href="{{ url()->previous() }}" class="btn btn-md btn-secondary"
                                         type="button">Return</a>
                                     <button class="btn btn-md btn-dark" type="submit">Save</button>
@@ -29,9 +37,10 @@
                             </div>
                         </div>
                         <div class="card tableFixHead">
-                            <table class="table table-responsive-sm table-striped table-borderless table-hover mb-0">
+                            <table id="listTable"
+                                class="table table-responsive-sm table-striped table-borderless table-hover mb-0">
                                 <thead class="thead-dark">
-                                    <tr>
+                                    <tr id="tableHeader">
                                         <th class=''>No.</th>
                                         <th class='col-1'>Item Code</th>
                                         <th class='col-1'>Drug / Non-Drug Name</th>
@@ -209,6 +218,7 @@
 @endsection
 
 @section('javascript')
+    @include('stock.searchTable')
     <script>
         $(document).on('click', '.deleteButton', function(e) {
 

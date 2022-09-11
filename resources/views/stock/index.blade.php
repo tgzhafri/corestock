@@ -17,6 +17,17 @@
                                 <h4 class="fa fa-align-justify"><strong>Stock List</strong></h4>
                             </div>
                             <div>
+                                <div class="input-group">
+                                    <input id="searchInput" onkeyup="searchTable()" type="search"
+                                        class="form-control rounded" placeholder="Search" aria-label="Search"
+                                        aria-describedby="search-addon" />
+                                    <button type="button" class="btn btn-secondary">Go!</button>
+                                </div>
+                            </div>
+                            <div class="alert alert-primary mb-0 animated-alert fadeOut" tabindex="1">Usage per
+                                <span class='text-uppercase'> {{ request('usage') ?? 'year' }}</span> selected
+                            </div>
+                            <div>
                                 <button type="button" class="btn btn-primary btn-md" data-toggle="modal"
                                     data-target="#staticBackdrop">
                                     Upload Excel File</button>
@@ -68,10 +79,11 @@
         <div class="row">
             <div class="col">
                 <div class="card tableFixHead">
-                    <table class="table table-responsive-sm table table-hover table-striped mb-0 table-borderless">
+                    <table id="listTable"
+                        class="table table-responsive-sm table table-hover table-striped mb-0 table-borderless">
                         <thead class="thead-dark">
                             <form action="{{ route('stock.show') }}" method="GET">
-                                <tr>
+                                <tr id="tableHeader">
                                     <th>No.</th>
                                     <th class="col-1">Item Code</th>
                                     <th class="col-3">Drug / Non-Drug Name</th>
@@ -154,4 +166,5 @@
 @endsection
 
 @section('javascript')
+    @include('stock.searchTable')
 @endsection
