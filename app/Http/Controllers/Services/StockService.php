@@ -58,7 +58,7 @@ class StockService
 
         $usagePeriod = $request->usage;
         $status = $request->status;
-        $status == 'all' ? $stocks = $this->stocks : $stocks = $this->stocks->where('status', $status);
+        !$status || $status == 'all' ? $stocks = $this->stocks : $stocks = $this->stocks->where('status', $status);
 
         $result = collect();
 
@@ -67,7 +67,7 @@ class StockService
             $usagePeriod == 'month' ? $usage = round($stock->annual_usage / 12, 2) : null;
             $usagePeriod == 'quarter' ? $usage = round($stock->annual_usage / 4, 2) : null;
             $usagePeriod == 'week' ? $usage = round($stock->annual_usage / 52, 2) : null;
-
+            // dd($stock->supplier);
             $result->push([
                 'id' => $stock->id,
                 'code' => $stock->code,
@@ -77,6 +77,8 @@ class StockService
                 'balance' => $stock->balance,
                 'annual_usage' => $usage ? $usage : null,
                 'status' => $stock->status,
+                'supplier' => $stock->supplier,
+                'remark' => $stock->remark
             ]);
         });
 

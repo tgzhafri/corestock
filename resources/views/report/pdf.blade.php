@@ -24,14 +24,18 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="4">
-                    <strong>Date</strong>
-                    <span class="medium text-muted"></span>
-                </td>
-                <td colspan="4">
-                    <strong>Closing Date</strong>
-                    <span class="medium text-muted"></span>
-                </td>
+                <form action="">
+                    <td colspan="4">
+                        <strong>Date</strong>
+                        <input class="text-muted border-secondary rounded" type="text"
+                            value="{{ session()->put('start_date', now()->format('d-M-Y')) ?? now()->format('d-M-Y') }}">
+                    </td>
+                    <td colspan="4">
+                        <strong>Closing Date</strong>
+                        <input class="text-muted border-secondary rounded" type="text"
+                            value="{{ session()->put('closing_date',now()->addMonth()->format('d-M-Y')) ??now()->addMonth()->format('d-M-Y') }}">
+                    </td>
+                </form>
             </tr>
         </table>
 
@@ -53,25 +57,26 @@
                         <td colspan="10" class="text-center">No data found</td>
                     </tr>
                 @endif
-                @foreach ($stocks as $index => $stock)
+                @foreach ($stocks as $key => $stock)
                     <tr>
-                        <td>{{ $index + 1 }}</td>
-                        <td>{{ $stock->code }}</td>
-                        <td>{{ $stock->name }}</td>
-                        <td>{{ $stock->common_name }}</td>
-                        <td>
+                        <td>{{ $key + 1 }}</td>
+                        <td>{{ $stock['code'] }}</td>
+                        <td>{{ $stock['name'] }}</td>
+                        <td>{{ $stock['common_name'] }}</td>
+                        {{-- <td>
                             <div class="clearfix">
                                 <div class="float-left"><strong>50%</strong></div>
                             </div>
-                        </td>
+                        </td> --}}
+                        <td>{{ $stock['balance'] - $stock['annual_usage'] }}</td>
                         <td>
-                            @foreach ($stock->supplier as $supplier)
+                            @foreach ($stock['supplier'] as $supplier)
                                 <div>
                                     <li>{{ $supplier->name }}</li>
                                 </div>
                             @endforeach
                         </td>
-                        <td>{{ $stock->remark }}</td>
+                        <td>{{ $stock['remark'] }}</td>
                     </tr>
                 @endforeach
             </tbody>

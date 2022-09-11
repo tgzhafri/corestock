@@ -43,11 +43,11 @@
                             <tr>
                                 <td colspan="4">
                                     <strong>Date</strong>
-                                    <span class="medium text-muted"></span>
+                                    <span class="medium text-muted">{{ session()->get('start_date') }}</span>
                                 </td>
                                 <td colspan="4">
                                     <strong>Closing Date</strong>
-                                    <span class="medium text-muted"></span>
+                                    <span class="medium text-muted">{{ session()->get('closing_date') }}</span>
                                 </td>
                             </tr>
                         </table>

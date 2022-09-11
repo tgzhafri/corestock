@@ -124,9 +124,7 @@
                                     <td>{{ $stock['common_name'] }}</td>
                                     <td>{{ $stock['description'] }}</td>
                                     <td>{{ $stock['balance'] }}</td>
-                                    {{-- usage per --}}
                                     <td>{{ $stock['annual_usage'] }}</td>
-                                    {{-- quantity required --}}
                                     <td>{{ $stock['balance'] - $stock['annual_usage'] }}</td>
                                     <td class="text-center">
                                         @if ($stock['status'] == 'high')

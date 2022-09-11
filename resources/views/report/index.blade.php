@@ -7,10 +7,14 @@
             <div class="row">
                 <!-- /.col-->
                 <div class="col">
+
                     <div class="card-header bg-transparent border-bottom-0">
                         <div class="row d-flex justify-content-between">
                             <div>
                                 <h4 class="fa fa-align-justify"><strong>Report Preview</strong></h4>
+                            </div>
+                            <div class="alert alert-success mb-0 animated-alert fadeOut" tabindex="1">Quantity per
+                                <span class='text-uppercase'> {{ request('usage') ?? 'year' }}</span> selected
                             </div>
                             <div class="d-flex justify-content-around">
                                 <div class="dropdown mr-2">
@@ -19,17 +23,22 @@
                                         <i class="c-icon c-icon-sm cil-filter"></i></button>
                                     <div class="dropdown-menu">
                                         <h6 class="dropdown-header">Quantity Per</h6>
-                                        <a class="dropdown-item" href="#">Month</a>
-                                        <a class="dropdown-item" href="#">Quarter</a>
-                                        <a class="dropdown-item" href="#">Year</a>
+                                        <a class="dropdown-item"
+                                            href="{{ route('report.show', ['usage' => 'month']) }}">Month</a>
+                                        <a class="dropdown-item"
+                                            href="{{ route('report.show', ['usage' => 'quarter']) }}">Quarter</a>
+                                        <a class="dropdown-item"
+                                            href="{{ route('report.show', ['usage' => 'year']) }}">Year</a>
                                     </div>
                                 </div>
-                                <a href="{{ route('report.generate') }}" class="btn btn-md btn-primary mr-1"
-                                    type="button">Generate
-                                    Report</a>
-                                <a href="{{ url('/stock/edit') }}">
-                                    <button class="btn btn-md btn-secondary" type="button">Edit List</button>
-                                </a>
+                                <div>
+                                    <a href="{{ route('report.generate') }}" class="btn btn-md btn-primary mr-1"
+                                        type="button">Generate
+                                        Report</a>
+                                    <a href="{{ url('/stock/edit') }}">
+                                        <button class="btn btn-md btn-secondary" type="button">Edit List</button>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>

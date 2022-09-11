@@ -494,9 +494,29 @@ html:not([dir=rtl]) .ps__thumb-y {
   }
 }
 
-.tableFixHead          { overflow: auto; height: calc(100vh / 1.35); }
+.tableFixHead          { overflow: auto; height: calc(100vh / 1.6); }
 
 .tableFixHead thead th { position: sticky; top: 0; z-index: 1; }
+
+.animated-alert {
+    -webkit-animation-duration: 10s;animation-duration: 10s;
+    -webkit-animation-fill-mode: both;animation-fill-mode: both;
+ }
+
+ @-webkit-keyframes fadeOut {
+    0% {opacity: 1;}
+    100% {opacity: 0;}
+ }
+
+ @keyframes fadeOut {
+    0% {opacity: 1;}
+    100% {opacity: 0;}
+ }
+
+ .fadeOut {
+    -webkit-animation-name: fadeOut;
+    animation-name: fadeOut;
+ }
 
 .tippy-box[data-animation=fade][data-state=hidden] {
   opacity: 0;
