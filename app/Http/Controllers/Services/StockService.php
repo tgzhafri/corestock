@@ -29,6 +29,10 @@ class StockService
             if ($stock->balance < $twoMonthUsage) {
                 $item->whereId($stock->id)->update(['status' => 'low']);
             } elseif (
+                $stock->balance == 0 && $stock->annual_usage == 0
+            ) {
+                $item->whereId($stock->id)->update(['status' => 'n/a']);
+            } elseif (
                 $stock->balance <= $fourMonthUsage
                 && $stock->balance >= $twoMonthUsage
             ) {
@@ -109,9 +113,16 @@ class StockService
     public function fetchImport($request)
     {
         $importedData = Excel::toArray(new StockImport, $request->file);
+        $data = collect($importedData)->collapse();
 
-        if ($importedData) {
-            $this->importService($importedData);
+        if ($data) {
+
+            $columns = ['item_code', 'drug_non_drug_name', 'packaging_description', 'total_stock_in_sku'];
+            if (array_keys($data[0]) != $columns) {
+                return false;
+            }
+
+            $this->importService($data);
             Session::flash('message', 'Upload Successfully.');
             Session::flash('alert-class', 'alert-success');
             return auth()->user()->stock()->get()->sortBy('name');
@@ -125,21 +136,19 @@ class StockService
     public function importService($data)
     {
         $user_id = auth()->user()->id;
-        foreach ($data as $rows) {
-            foreach ($rows as $row) {
-                if ($row['item_code']) {
-                    Stock::updateOrCreate(
-                        [
-                            'user_id' => $user_id,
-                            'code' => $row['item_code'] ? $row['item_code'] : 'null',
-                        ],
-                        [
-                            'name' => $row['drug_non_drug_name'] ? $row['drug_non_drug_name'] : 'null',
-                            'description' => $row['packaging_description'] ? $row['packaging_description'] : 'null',
-                            'balance' => $row['total_stock_in_sku'] ? $row['total_stock_in_sku'] : 0
-                        ]
-                    );
-                }
+        foreach ($data as $row) {
+            if ($row['item_code']) {
+                Stock::updateOrCreate(
+                    [
+                        'user_id' => $user_id,
+                        'code' => $row['item_code'] ? $row['item_code'] : 'null',
+                    ],
+                    [
+                        'name' => $row['drug_non_drug_name'] ? $row['drug_non_drug_name'] : 'null',
+                        'description' => $row['packaging_description'] ? $row['packaging_description'] : 'null',
+                        'balance' => $row['total_stock_in_sku'] ? $row['total_stock_in_sku'] : 0
+                    ]
+                );
             }
         }
     }

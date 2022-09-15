@@ -65,6 +65,8 @@
                         <th class="col-1">Status
                             <select class="form-select btn btn-secondary dropdown-toggle" name="status"
                                 aria-label="Default select example" onchange="this.form.submit()">
+                                <option value="n/a" @if (isset($_GET['status']) && $_GET['status'] == 'n/a') selected @endif>
+                                    N/A</option>
                                 <option value="all" @if (isset($_GET['status']) && $_GET['status'] == 'all') selected @endif>
                                     All</option>
                                 <option value="low" @if (isset($_GET['status']) && $_GET['status'] == 'low') selected @endif>
@@ -112,6 +114,8 @@
                                 <span class="badge badge-warning">Medium</span>
                             @elseif ($stock['status'] == 'low')
                                 <span class="badge badge-danger">Low</span>
+                            @elseif ($stock['status'] == 'n/a')
+                                <span class="badge badge-secondary">N/A</span>
                             @endif
                         </td>
                     </tr>

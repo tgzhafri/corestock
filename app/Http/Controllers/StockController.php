@@ -85,7 +85,7 @@ class StockController extends Controller
         if ($result) {
             return Redirect::route('stock.index', ['stocks' => $result]);
         } else {
-            return Redirect::back();
+            return Redirect::back()->withErrors('Wrong file uploaded!');
         }
     }
 }
