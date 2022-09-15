@@ -70,25 +70,33 @@
                                         <td colspan="10" class="text-center">No data found</td>
                                     </tr>
                                 @endif
-                                @foreach ($stocks as $index => $stock)
+                                @foreach ($stocks as $key => $stock)
                                     <tr>
-                                        <td>{{ $index + 1 }}</td>
-                                        <td>{{ $stock->code }}</td>
-                                        <td>{{ $stock->name }}</td>
-                                        <td>{{ $stock->common_name }}</td>
+                                        <td>{{ $key + 1 }}</td>
+                                        <td>{{ $stock['code'] }}</td>
+                                        <td>{{ $stock['name'] }}</td>
+                                        <td>{{ $stock['common_name'] }}</td>
                                         <td>
-                                            <div class="clearfix">
-                                                <div class="float-left">50000</div>
-                                            </div>
+                                            @if (number_format($stock['annual_usage'] - $stock['balance']) <= 0)
+                                                {{ 0 }}
+                                            @else
+                                                {{ number_format($stock['annual_usage'] - $stock['balance']) }}
+                                            @endif
                                         </td>
                                         <td>
-                                            @foreach ($stock->supplier as $supplier)
+                                            @foreach ($stock['supplier'] as $supplier)
                                                 <div>
                                                     <li>{{ $supplier->name }}</li>
                                                 </div>
                                             @endforeach
                                         </td>
-                                        <td>{{ $stock->remark }}</td>
+                                        <td>
+                                            <div class="list-unstyled">
+                                                <li class="text-capitalize text-muted secondary">{{ $stock['status'] }}
+                                                    quantity</li>
+                                                <li>{{ $stock['remark'] }}</li>
+                                            </div>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

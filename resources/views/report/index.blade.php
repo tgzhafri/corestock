@@ -21,8 +21,9 @@
                                     <button type="button" class="btn btn-secondary">Go!</button>
                                 </div>
                             </div>
-                            <div class="alert alert-primary mb-0 animated-alert fadeOut" tabindex="1">Quantity per
-                                <span class='text-uppercase'> {{ request('usage') ?? 'year' }}</span> selected
+                            <div class="alert alert-primary mb-0 animated-alert fadeOut" tabindex="1">
+                                Quantity per<span class='text-uppercase'> {{ request('usage') ?? 'year' }}</span>
+                                & Status <span class='text-uppercase'> {{ request('status') ?? 'all' }}</span> selected
                             </div>
                             <div class="d-flex justify-content-around">
                                 <div class="dropdown mr-2">
@@ -40,9 +41,8 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <a href="{{ route('report.generate') }}" class="btn btn-md btn-primary mr-1"
-                                        type="button">Generate
-                                        Report</a>
+                                    <a href="{{ route('report.generate', ['usage' => $_GET['usage'], 'status' => $_GET['status']]) }}"
+                                        class="btn btn-md btn-primary mr-1" type="button">Generate Report</a>
                                     <a href="{{ url('/stock/edit') }}">
                                         <button class="btn btn-md btn-secondary" type="button">Edit List</button>
                                     </a>
@@ -50,12 +50,10 @@
                             </div>
                         </div>
                     </div>
-                    @include('report.pdf')
+                    @include('report.table')
                     <!-- /.col-->
                 </div>
                 <!-- /.row-->
             </div>
         </div>
     @endsection
-
-

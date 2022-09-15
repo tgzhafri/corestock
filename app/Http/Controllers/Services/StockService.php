@@ -52,12 +52,12 @@ class StockService
         $stock->save();
     }
 
-    public function showFilter($request)
+    public function showFilter()
     {
         $this->stocks = auth()->user()->stock()->get()->sortBy('name');
 
-        $usagePeriod = $request->usage;
-        $status = $request->status;
+        $usagePeriod = request('usage');
+        $status = request('status');
         !$status || $status == 'all' ? $stocks = $this->stocks : $stocks = $this->stocks->where('status', $status);
 
         $result = collect();
@@ -67,7 +67,6 @@ class StockService
             $usagePeriod == 'month' ? $usage = round($stock->annual_usage / 12, 2) : null;
             $usagePeriod == 'quarter' ? $usage = round($stock->annual_usage / 4, 2) : null;
             $usagePeriod == 'week' ? $usage = round($stock->annual_usage / 52, 2) : null;
-            // dd($stock->supplier);
             $result->push([
                 'id' => $stock->id,
                 'code' => $stock->code,
@@ -75,7 +74,7 @@ class StockService
                 'common_name' => $stock->common_name,
                 'description' => $stock->description,
                 'balance' => $stock->balance,
-                'annual_usage' => $usage ? $usage : null,
+                'annual_usage' => $usage ?? null,
                 'status' => $stock->status,
                 'supplier' => $stock->supplier,
                 'remark' => $stock->remark

@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Services\StockService;
-use App\Models\Stock;
-use Illuminate\Http\Request;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\View;
 use Spatie\Browsershot\Browsershot;
 
 class ReportController extends Controller
@@ -16,18 +17,21 @@ class ReportController extends Controller
 
     public function index()
     {
+        !isset($_GET['status']) ? $_GET['status'] = 'all' : null;
+        !isset($_GET['usage']) ? $_GET['usage'] = 'year' : null;
+
         $stocks = auth()->user()->stock()->get()->sortBy('name');
 
-        return view('report.index', ['stocks' => $stocks]);
+        return view('report.index', View::share('stocks', $stocks));
     }
 
     public function generatePDF()
     {
-        $stocks = auth()->user()->stock()->get()->sortBy('name');
+        $stocks = $this->stockService->showFilter();
+        $content = view('report.generate', View::share('stocks', $stocks))->render();
 
-        $content = view('report.generate', ['stocks' => $stocks])->render();
-
-        $filePath = 'pdf/report.pdf';
+        $carbon = Carbon::now()->timestamp;
+        $filePath = "pdf/report-{$carbon}.pdf";
 
         Browsershot::html($content)
             ->noSandbox()
@@ -41,9 +45,12 @@ class ReportController extends Controller
         return response()->download(storage_path($filePath))->deleteFileAfterSend(true);
     }
 
-    public function show(Request $request)
+    public function show()
     {
-        $result = $this->stockService->showFilter($request);
-        return view('report.index', ['stocks' => $result]);
+        !isset($_GET['status']) ? $_GET['status'] = 'all' : null;
+        !isset($_GET['usage']) ? $_GET['usage'] = 'year' : null;
+
+        $stocks = $this->stockService->showFilter();
+        return view('report.index', View::share('stocks', $stocks));
     }
 }

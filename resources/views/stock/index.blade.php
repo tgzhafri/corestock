@@ -24,8 +24,9 @@
                                     <button type="button" class="btn btn-secondary">Go!</button>
                                 </div>
                             </div>
-                            <div class="alert alert-primary mb-0 animated-alert fadeOut" tabindex="1">Usage per
-                                <span class='text-uppercase'> {{ request('usage') ?? 'year' }}</span> selected
+                            <div class="alert alert-primary mb-0 animated-alert fadeOut" tabindex="1">
+                                Quantity per<span class='text-uppercase'> {{ request('usage') ?? 'year' }}</span>
+                                & Status <span class='text-uppercase'> {{ request('status') ?? 'all' }}</span> selected
                             </div>
                             <div>
                                 <button type="button" class="btn btn-primary btn-md" data-toggle="modal"
@@ -40,7 +41,7 @@
                 </div>
             </div>
 
-            <!-- Modal -->
+            <!-- Import/Export Modal -->
             <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog modal-primary">
@@ -57,7 +58,7 @@
                                         class="align-self-center card-body">
                                     <div class="card-footer">
                                         <div class="d-flex justify-content-around">
-                                            <button class="btn btn-md btn-primary col-lg-5" type="submit">
+                                            <button id="btn" class="btn btn-md btn-primary col-lg-5" type="submit">
                                                 Submit</button>
                                             <button class="btn btn-md btn-danger col-lg-5" type="reset"> Reset</button>
                                         </div>
@@ -103,13 +104,8 @@
                                                 Week</option>
                                         </select>
                                     </th>
-                                    <th class="col-1">Quantity Required
-                                        {{-- per
-                                        @if (isset($_GET['usage']))
-                                            {{ $_GET['usage'] }}
-                                        @else
-                                            year
-                                        @endif --}}
+                                    <th class="col-1">Quantity Required per
+                                        <span class="text-uppercase">{{ $_GET['usage'] ?? 'year' }}</span>
                                     </th>
                                     <th class="col-1">Status
                                         <select class="form-select btn btn-secondary dropdown-toggle" name="status"
@@ -135,15 +131,21 @@
                                     <td>{{ $stock['name'] }}</td>
                                     <td>{{ $stock['common_name'] }}</td>
                                     <td>{{ $stock['description'] }}</td>
-                                    <td>{{ $stock['balance'] }}</td>
-                                    <td>{{ $stock['annual_usage'] }}</td>
-                                    <td>{{ $stock['balance'] - $stock['annual_usage'] }}</td>
+                                    <td>{{ number_format($stock['balance']) }}</td>
+                                    <td>{{ number_format($stock['annual_usage']) }}</td>
+                                    <td>
+                                        @if (number_format($stock['annual_usage'] - $stock['balance']) <= 0)
+                                            {{ 0 }}
+                                        @else
+                                            {{ number_format($stock['annual_usage'] - $stock['balance']) }}
+                                        @endif
+                                    </td>
                                     <td class="text-center">
                                         @if ($stock['status'] == 'high')
                                             <span class="badge badge-success">High</span>
                                         @elseif ($stock['status'] == 'medium')
                                             <span class="badge badge-warning">Medium</span>
-                                        @else
+                                        @elseif ($stock['status'] == 'low')
                                             <span class="badge badge-danger">Low</span>
                                         @endif
                                     </td>
@@ -166,5 +168,13 @@
 @endsection
 
 @section('javascript')
+    <script>
+        document.querySelector('#btn').addEventListener('click', (e) => {
+            e.target.disabled = true
+            setTimeout(() => {
+                e.target.disabled = false
+            }, 2000)
+        })
+    </script>
     @include('stock.searchTable')
 @endsection
