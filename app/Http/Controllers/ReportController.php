@@ -31,7 +31,7 @@ class ReportController extends Controller
         $content = view('report.generate', View::share('stocks', $stocks))->render();
 
         $carbon = Carbon::now()->timestamp;
-        $filePath = "pdf/report-{$carbon}.pdf";
+        $filePath = "pdf/report.pdf";
 
         Browsershot::html($content)
             ->noSandbox()

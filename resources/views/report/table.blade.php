@@ -88,7 +88,7 @@
                 @endif
                 @foreach ($stocks as $key => $stock)
                     <tr>
-                        <td>{{ $key + 1 }}</td>
+                        <td>{{ $loop->iteration }}</td>
                         <td>{{ $stock['code'] }}</td>
                         <td>{{ $stock['name'] }}</td>
                         <td>{{ $stock['common_name'] }}</td>

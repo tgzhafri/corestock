@@ -128,7 +128,7 @@
                         <tbody>
                             @foreach ($stocks as $index => $stock)
                                 <tr>
-                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $loop->iteration }}</td>
                                     <td>{{ $stock['code'] }}</td>
                                     <td>{{ $stock['name'] }}</td>
                                     <td>{{ $stock['common_name'] }}</td>

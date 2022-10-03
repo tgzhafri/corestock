@@ -59,7 +59,7 @@
                                                 <input id="id" type="number" name="id[]"
                                                     value="{{ $stock->id }}" placeholder="{{ $stock->id }}"
                                                     class="form-control-plaintext" hidden readonly>
-                                                {{ $index + 1 }}
+                                            <td>{{ $loop->iteration }}</td>
                                             </td>
                                             <td>{{ $stock->code }}</td>
                                             <td>{{ $stock->name }}</td>
