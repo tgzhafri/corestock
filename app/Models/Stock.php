@@ -10,7 +10,7 @@ class Stock extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['code', 'user_id', 'name', 'description', 'balance', 'remark'];
+    protected $fillable = ['code', 'user_id', 'annual_usage', 'common_name', 'name', 'description', 'balance', 'remark'];
 
     public function supplier()
     {

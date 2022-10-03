@@ -57,4 +57,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Stock::class);
     }
+
+    public function supplier()
+    {
+        return $this->hasManyThrough(Stock::class, Supplier::class, 'stock_id', 'user_id', 'id', 'id');
+    }
 }

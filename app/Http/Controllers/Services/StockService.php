@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Services;
 
 use App\Imports\StockImport;
 use App\Models\Stock;
+use App\Models\Supplier;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
@@ -116,13 +117,22 @@ class StockService
         $data = collect($importedData)->collapse();
 
         if ($data) {
+            $hospTemplate = collect(['item_code', 'drug_non_drug_name', 'packaging_description', 'total_stock_in_sku']);
+            $ownTemplate = collect(['item_code', 'name', 'common_name', 'description', 'annual_usage', 'balance', 'remark', 'supplier']);
+            $headers = collect(array_keys($data[0]));
+            if ($headers->count() > 10) {
+                $columns = $hospTemplate;
+                $sheet = 'hosp';
+            } else {
+                $columns = $ownTemplate;
+                $sheet = 'own';
+            }
 
-            $columns = ['item_code', 'drug_non_drug_name', 'packaging_description', 'total_stock_in_sku'];
-            if (array_keys($data[0]) != $columns) {
+            if ($columns->diff($headers)->isNotEmpty()) {
                 return false;
             }
 
-            $this->importService($data);
+            $this->importService($data, $sheet);
             Session::flash('message', 'Upload Successfully.');
             Session::flash('alert-class', 'alert-success');
             return auth()->user()->stock()->get()->sortBy('name');
@@ -133,22 +143,45 @@ class StockService
         }
     }
 
-    public function importService($data)
+    public function importService($data, $sheet)
     {
-        $user_id = auth()->user()->id;
+        $user = auth()->user();
         foreach ($data as $row) {
             if ($row['item_code']) {
-                Stock::updateOrCreate(
-                    [
-                        'user_id' => $user_id,
-                        'code' => $row['item_code'] ? $row['item_code'] : 'null',
-                    ],
-                    [
-                        'name' => $row['drug_non_drug_name'] ? $row['drug_non_drug_name'] : 'null',
-                        'description' => $row['packaging_description'] ? $row['packaging_description'] : 'null',
-                        'balance' => $row['total_stock_in_sku'] ? $row['total_stock_in_sku'] : 0
-                    ]
-                );
+                if ($sheet == 'hosp') {
+                    $user->stock()->updateOrCreate(
+                        [
+                            'code' => $row['item_code'] ? $row['item_code'] : 'null',
+                        ],
+                        [
+                            'name' => $row['drug_non_drug_name'] ? $row['drug_non_drug_name'] : 'null',
+                            'description' => $row['packaging_description'] ? $row['packaging_description'] : '',
+                            'balance' => $row['total_stock_in_sku'] ? $row['total_stock_in_sku'] : 0
+                        ]
+                    );
+                } else {
+                    $user->stock()->updateOrCreate(
+                        [
+                            'code' => $row['item_code'] ? $row['item_code'] : 'null',
+                        ],
+                        [
+                            'name' => $row['name'] ? $row['name'] : 'null',
+                            'common_name' => $row['common_name'] ? $row['common_name'] : '',
+                            'description' => $row['description'] ? $row['description'] : '',
+                            'annual_usage' => $row['annual_usage'] ? $row['annual_usage'] : 0,
+                            'balance' => $row['balance'] ? $row['balance'] : 0,
+                            'remark' => $row['remark'] ? $row['remark'] : '',
+                        ]
+                    );
+                    if ($row['supplier']) {
+                        collect(explode(',', $row['supplier']))->map(function ($supplier) use ($user, $row) {
+                            Supplier::updateOrCreate([
+                                'stock_id' => $row['id'],
+                                'name' => $supplier
+                            ]);
+                        });
+                    }
+                }
             }
         }
     }

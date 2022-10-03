@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\StockExport;
 use App\Http\Controllers\Services\StockService;
 use App\Models\Stock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
 
 class StockController extends Controller
 {
@@ -87,5 +89,10 @@ class StockController extends Controller
         } else {
             return Redirect::back()->withErrors('Wrong file uploaded!');
         }
+    }
+
+    public function download()
+    {
+        return Excel::download(new StockExport, 'stock.xlsx');
     }
 }

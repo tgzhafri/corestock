@@ -52,7 +52,12 @@
                         </div>
                         <div class="modal-body">
                             <form action="{{ route('stock.import') }}" method="POST" enctype="multipart/form-data">
-                                <div class="card justify-content">
+                                <div class="card text-center">
+                                    <div class="card-header">
+                                        <a href="{{ route('stock.download') }}" class="btn btn-md btn-secondary col-lg-11">
+                                            <i class="c-icon cil-cloud-download"></i> Download Template
+                                        </a>
+                                    </div>
                                     {{ csrf_field() }}
                                     <input id="file-input" type="file" name="file"
                                         class="align-self-center card-body">

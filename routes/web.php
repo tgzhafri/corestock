@@ -51,6 +51,7 @@ Route::group(['middleware' => ['get.menu']], function () {
             Route::get('/edit', 'StockController@edit')->name('stock.edit');
             Route::post('/delete', 'StockController@delete')->name('stock.delete');
             Route::post('/save', 'StockController@save')->name('stock.save');
+            Route::get('/download', 'StockController@download')->name('stock.download');
         });
         Route::prefix('supplier')->group(function () {
             Route::get('/', 'SupplierController@index')->name('supplier.index');
