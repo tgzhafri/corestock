@@ -43,7 +43,7 @@
                                     <tr id="tableHeader">
                                         <th class=''>No.</th>
                                         <th class='col-1'>Item Code</th>
-                                        <th class='col-1'>Drug / Non-Drug Name</th>
+                                        <th class='col-1'>Name</th>
                                         <th class='col-1.5'>Common Name</th>
                                         <th class='col-1.5'>Packaging Description</th>
                                         <th class=''>Total Stock In (SKU)</th>

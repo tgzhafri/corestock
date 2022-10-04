@@ -70,16 +70,12 @@
                                     </div>
                                 </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        </div>
                         </form>
                     </div>
                 </div>
             </div>
-
+            <!-- Import/Export Modal -->
         </div>
-        <!-- /.row-->
 
         <!-- /.row-->
         <div class="row">
@@ -92,7 +88,7 @@
                                 <tr id="tableHeader">
                                     <th>No.</th>
                                     <th class="col-1">Item Code</th>
-                                    <th class="col-3">Drug / Non-Drug Name</th>
+                                    <th class="col-3">Name</th>
                                     <th class="col-2">Common Name</th>
                                     <th class="col-2">Packaging Description</th>
                                     <th class="col-1">Total Stock In (SKU)</th>

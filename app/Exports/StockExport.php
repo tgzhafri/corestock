@@ -86,6 +86,7 @@ class StockExport implements
                     'color' => ['rgb' => '0000000'],
                 ],
             ],
+            'font' => ['bold' => true, 'size' => 12]
         ];
 
         $sheet->getStyle('A1:I1')->getFill()->applyFromArray(['fillType' => 'solid', 'rotation' => 0, 'color' => ['rgb' => 'D9D9D9'],]);
@@ -93,16 +94,12 @@ class StockExport implements
 
         $sheet->getProtection()->setPassword('password');
         $sheet->getProtection()->setSheet(true);
-        $sheet->getStyle('B2:Z999')->getProtection()->setLocked(Protection::PROTECTION_UNPROTECTED);
-
-        return [
-            //* Style first row as bold text.
-            1 => ['font' => ['bold' => true, 'size' => 12]],
-        ];
+        $sheet->getStyle('B2:I300')->getProtection()->setLocked(Protection::PROTECTION_UNPROTECTED);
     }
 
     public static function afterSheet(AfterSheet $event)
     {
         $event->sheet->getDelegate()->getComment('I1')->getText()->createTextRun('Insert multiple suppliers (i.e. Supplier 1, Supplier 2, Supplier 3');
+        $event->sheet->getDelegate()->getComment('A1')->getText()->createTextRun('You can add new item by leaving the id column blank');
     }
 }

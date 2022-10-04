@@ -42,11 +42,11 @@
                             <thead class="thead-dark">
                                 <tr id="tableHeader">
                                     <th class=''>No.</th>
-                                    <th class='col-1'>Item Code</th>
-                                    <th class='col-3'>Drug / Non-Drug Name</th>
+                                    <th class='col-2'>Item Code</th>
+                                    <th class='col-3'>Name</th>
                                     <th class='col-2'>Common Name</th>
                                     <th class='col-2'>Packaging Description</th>
-                                    <th class='col-4'>Suppliers</th>
+                                    <th class='col-3'>Suppliers</th>
                                 </tr>
                             </thead>
                             <tbody>

@@ -120,6 +120,7 @@ class StockService
             $hospTemplate = collect(['item_code', 'drug_non_drug_name', 'packaging_description', 'total_stock_in_sku']);
             $ownTemplate = collect(['item_code', 'name', 'common_name', 'description', 'annual_usage', 'balance', 'remark', 'supplier']);
             $headers = collect(array_keys($data[0]));
+
             if ($headers->count() > 10) {
                 $columns = $hospTemplate;
                 $sheet = 'hosp';
@@ -127,7 +128,6 @@ class StockService
                 $columns = $ownTemplate;
                 $sheet = 'own';
             }
-
             if ($columns->diff($headers)->isNotEmpty()) {
                 return false;
             }
@@ -160,7 +160,7 @@ class StockService
                         ]
                     );
                 } else {
-                    $user->stock()->updateOrCreate(
+                    $stock = $user->stock()->updateOrCreate(
                         [
                             'code' => $row['item_code'] ? $row['item_code'] : 'null',
                         ],
@@ -173,10 +173,10 @@ class StockService
                             'remark' => $row['remark'] ? $row['remark'] : '',
                         ]
                     );
-                    if ($row['supplier']) {
-                        collect(explode(',', $row['supplier']))->map(function ($supplier) use ($user, $row) {
+                    if ($row['supplier'] && $stock) {
+                        collect(explode(',', $row['supplier']))->map(function ($supplier) use ($stock) {
                             Supplier::updateOrCreate([
-                                'stock_id' => $row['id'],
+                                'stock_id' => $stock->id,
                                 'name' => $supplier
                             ]);
                         });
