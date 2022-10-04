@@ -1,0 +1,78 @@
+name: push
+
+on:
+  # running only when PR opened to master & develop. Save cost.
+  pull_request:
+    branches:
+      - main
+      - develop
+
+# ensure that only single workflow run per PR. Cancel previous run in case multiple commits.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  phpunit:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php-versions: ["7.4"]
+
+    services:
+      # mysql-service Label used to access the service container
+      mysql-service:
+        # Docker Hub image (also with version)
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: sku-testing
+        ports:
+          - 3306:3306
+        # Set health checks to wait until mysql database has started (it takes some seconds to start)
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+
+      - name: Check PHP Version
+        run: php -v
+
+      - name: Verify sku-testing exists
+        run: mysql --host 127.0.0.1 --port 3306 -uroot -proot -e "SHOW DATABASES LIKE 'sku-testing'"
+
+      - name: Install Dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
+      - name: Install Puppeteer
+        run: npm install puppeteer
+
+      - name: Prepare Laravel Application
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+          chmod -R 777 storage bootstrap/cache
+
+      - name: Execute Migrations & Run Test
+        run: |
+          php artisan migrate:fresh --seed
+          php artisan passport:install
+          php artisan optimize:clear
+          php artisan route:cache
+          php artisan test
+        env:
+          APP_ENV: testing
+          DB_CONNECTION: mysql
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
