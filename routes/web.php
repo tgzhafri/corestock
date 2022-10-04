@@ -13,8 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/generate', 'ReportController@generatePDF')->name('report.generate');
-
 Route::group(['middleware' => ['get.menu']], function () {
     Route::get('/', function () {
         return view('dashboard.homepage');

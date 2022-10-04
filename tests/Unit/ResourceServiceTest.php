@@ -77,7 +77,7 @@ class ResourceServiceTest extends TestCase
         $folder = new Folder();
         $folder->name = 'Resource';
         $folder->resource = 1;
-        $folder->save(); 
+        $folder->save();
         $resourceService = new ResourceService();
         $file = UploadedFile::fake()->image('file.jpg');
         $request = array('column_name' => $file);
@@ -141,24 +141,24 @@ class ResourceServiceTest extends TestCase
         $resourceService = new ResourceService();
         $result = $resourceService->getIndexDatas( $formId );
         $expectedEnableButtons = array(
-            'read' => '1',
-            'edit' => '1',
-            'add' => '1',
-            'delete' => '1',
+            'read' => 1,
+            'edit' => 1,
+            'add' => 1,
+            'delete' => 1,
         );
         $expectedData = array(
             array(
-                'id' => '1',
+                'id' => 1,
                 'name' => 'Lorem',
                 'description' => 'Lorem ipsum dolor',
-                'status_id' => '1',
+                'status_id' => 1,
                 'relation_status_id' => 'Lorem ipsum dolor'
             ),
             array(
-                'id' => '2',
+                'id' => 2,
                 'name' => 'ipsum',
                 'description' => 'Lorem ipsum dolor',
-                'status_id' => '1',
+                'status_id' => 1,
                 'relation_status_id' => 'Lorem ipsum dolor'
             ),
         );
@@ -198,7 +198,7 @@ class ResourceServiceTest extends TestCase
             'status_id' => '7',
         ]);
     }
-    
+
     public function testUpdate(){
         $formId = $this->helperCreateForm('Form name');
         $exampleId = $this->helperCreateExample('test');
@@ -264,7 +264,7 @@ class ResourceServiceTest extends TestCase
                 'type' => 'text',
                 'name' => 'status_id',
                 'column_name' => 'status_id',
-                'value' => '1',
+                'value' => 1,
             )
         );
         $this->assertSame($expected, $result);

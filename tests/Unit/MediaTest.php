@@ -241,7 +241,7 @@ class MediaTest extends TestCase
         $media = $folder->getFirstMedia();
         $this->assertDatabaseHas('media',['id' => $media['id'], 'model_id' => $folder->id]);
     }
-    
+
     public function testFileMove(){
         $user = User::factory()->admin()->create();
         $adminRole = Role::create(['name' => 'admin']);
