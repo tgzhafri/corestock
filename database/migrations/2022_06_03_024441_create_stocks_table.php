@@ -15,7 +15,8 @@ class CreateStocksTable extends Migration
     {
         Schema::create('stocks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            // $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->integer('user_id')->index();
             $table->string('code');
             $table->string('name');
             $table->string('common_name')->nullable();

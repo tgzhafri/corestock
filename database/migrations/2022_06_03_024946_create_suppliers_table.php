@@ -15,7 +15,8 @@ class CreateSuppliersTable extends Migration
     {
         Schema::create('suppliers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('stock_id')->constrained()->onDelete('cascade');
+            // $table->foreignId('stock_id')->constrained()->onDelete('cascade');
+            $table->integer('stock_id')->index();
             $table->string('name');
             $table->timestamps();
             $table->softDeletes();
