@@ -31,9 +31,9 @@
                             <div>
                                 <button type="button" class="btn btn-primary btn-md" data-toggle="modal"
                                     data-target="#staticBackdrop">
-                                    Upload Excel File</button>
+                                    Upload Excel</button>
                                 <a href="{{ url('/stock/edit') }}">
-                                    <button class="btn btn-md btn-secondary" type="button">Edit List</button>
+                                    <button class="btn btn-md btn-secondary" type="button">Edit</button>
                                 </a>
                             </div>
                         </div>

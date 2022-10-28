@@ -40,11 +40,21 @@
                                             href="{{ route('report.show', ['usage' => 'year']) }}">Year</a>
                                     </div>
                                 </div>
+                                <div class="dropdown mr-2">
+                                    <button class="btn btn-primary dropdown-toggle" id="dropdownMenu3" type="button"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Export</button>
+                                    <div class="dropdown-menu">
+                                        <h6 class="dropdown-header">Export as</h6>
+                                        <a href="{{ route('report.excel', ['usage' => $_GET['usage'], 'status' => $_GET['status']]) }}"
+                                            class="dropdown-item" type="button">Excel</a>
+                                        <a href="{{ route('report.pdf', ['usage' => $_GET['usage'], 'status' => $_GET['status']]) }}"
+                                            class="dropdown-item" type="button">PDF</a>
+                                    </div>
+                                </div>
                                 <div>
-                                    <a href="{{ route('report.generate', ['usage' => $_GET['usage'], 'status' => $_GET['status']]) }}"
-                                        class="btn btn-md btn-primary mr-1" type="button">Generate Report</a>
                                     <a href="{{ url('/stock/edit') }}">
-                                        <button class="btn btn-md btn-secondary" type="button">Edit List</button>
+                                        <button class="btn btn-md btn-secondary" type="button">Edit</button>
                                     </a>
                                 </div>
                             </div>

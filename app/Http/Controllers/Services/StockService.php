@@ -7,7 +7,6 @@ use App\Models\Stock;
 use App\Models\Supplier;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Validator;
 
 class StockService
 {
@@ -59,7 +58,7 @@ class StockService
 
     public function showFilter()
     {
-        $this->stocks = auth()->user()->stock()->get()->sortBy('name');
+        $this->stocks = auth()->user()->stock()->with('supplier')->get()->sortBy('name');
 
         $usagePeriod = request('usage');
         $status = request('status');

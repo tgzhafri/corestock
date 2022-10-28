@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ReportExport;
 use App\Http\Controllers\Services\StockService;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
+use Maatwebsite\Excel\Facades\Excel;
 use Spatie\Browsershot\Browsershot;
 
 class ReportController extends Controller
@@ -31,7 +32,7 @@ class ReportController extends Controller
         $content = view('report.generate', View::share('stocks', $stocks))->render();
 
         $carbon = Carbon::now()->timestamp;
-        $filePath = "pdf/report.pdf";
+        $filePath = "pdf/{$carbon}-corestock-report.pdf";
 
         Browsershot::html($content)
             ->noSandbox()
@@ -44,6 +45,23 @@ class ReportController extends Controller
 
         return response()->download(storage_path($filePath))->deleteFileAfterSend(true);
     }
+
+    public function downloadExcel()
+    {
+        $unix = Carbon::now()->timestamp;
+        $stocks = $this->stockService->showFilter();
+
+        return Excel::download(new ReportExport($stocks), "Corestock-report-$unix.xlsx");
+    }
+
+    public function downloadPdf()
+    {
+        $unix = Carbon::now()->timestamp;
+        $stocks = $this->stockService->showFilter();
+
+        return (new ReportExport($stocks))->download("Corestock-report-$unix.pdf", \Maatwebsite\Excel\Excel::DOMPDF);
+    }
+
 
     public function show()
     {

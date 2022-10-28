@@ -60,6 +60,8 @@ Route::group(['middleware' => ['get.menu']], function () {
         Route::prefix('report')->group(function () {
             Route::get('/', 'ReportController@index')->name('report.index');
             Route::get('/generate', 'ReportController@generatePDF')->name('report.generate');
+            Route::get('/excel', 'ReportController@downloadExcel')->name('report.excel');
+            Route::get('/pdf', 'ReportController@downloadPdf')->name('report.pdf');
             Route::get('/show', 'ReportController@show')->name('report.show');
         });
         Route::prefix('base')->group(function () {
