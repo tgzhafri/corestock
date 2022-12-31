@@ -1,4 +1,4 @@
-# fly.toml file generated for corestock on 2022-10-13T08:59:49+08:00
+# fly.toml file generated for corestock on 2022-12-31T09:47:03+08:00
 
 app = "corestock"
 kill_signal = "SIGINT"
@@ -10,18 +10,22 @@ processes = []
     NODE_VERSION = "14"
     PHP_VERSION = "8.1"
 
+[deploy]
+  release_command = "php /var/www/html/artisan migrate --force"
+
 [env]
   APP_ENV = "production"
+  APP_URL = "https://corestock.fly.dev"
+  DB_CONNECTION = "mysql"
+  DB_DATABASE = "sku-laravel"
+  DB_HOST = "ap-southeast.connect.psdb.cloud"
+  DB_PASSWORD = "pscale_pw_C1CNrWvCZ034FNehW5Fx0n5uLo3vAOiCW9QJKcNeGkb"
+  DB_PORT = "3306"
+  DB_USERNAME = "fr89rz5jxjfwztdizlco"
   LOG_CHANNEL = "stderr"
   LOG_LEVEL = "info"
   LOG_STDERR_FORMATTER = "Monolog\\Formatter\\JsonFormatter"
-    DB_CONNECTION="mysql"
-    DB_HOST="ap-southeast.connect.psdb.cloud"
-    DB_PORT="3306"
-    DB_DATABASE="sku-laravel"
-    DB_USERNAME="fr89rz5jxjfwztdizlco"
-    DB_PASSWORD="pscale_pw_C1CNrWvCZ034FNehW5Fx0n5uLo3vAOiCW9QJKcNeGkb"
-    MYSQL_ATTR_SSL_CA="/etc/ssl/certs/ca-certificates.crt"
+  MYSQL_ATTR_SSL_CA = "/etc/ssl/certs/ca-certificates.crt"
 
 [experimental]
   allowed_public_ports = []
@@ -48,10 +52,7 @@ processes = []
     port = 443
 
   [[services.tcp_checks]]
-    grace_period = "1s"
+    grace_period = "15s"
     interval = "15s"
     restart_limit = 0
     timeout = "2s"
-
-[deploy]
-  release_command = "php /var/www/html/artisan migrate --force"

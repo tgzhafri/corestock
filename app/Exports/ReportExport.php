@@ -145,7 +145,7 @@ class ReportExport implements
         $sheet->getPageMargins()->setLeft(0.75);
         $sheet->getPageMargins()->setBottom(1);
 
-        for ($i = 0; $i <= $this->row; $i++) {
+        for ($i = 1; $i <= $this->row; $i++) {
             // to make alternate row different colour
             if ($i > 2 && $i % 2 != 0) {
                 $sheet->getStyle('A' . $i . ':I' . $i)->applyFromArray(
